@@ -1,105 +1,144 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>REXXY UID STORE</title>
 
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<title>REXXY UID STORE</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
 
-<div class="background"></div>
+<div class="bg-effect"></div>
 
 <header>
 
-    <h1>REXXY UID STORE</h1>
+<h1>REXXY UID STORE</h1>
 
-    <p>
-        LIST UID FREE FIRE • FAST RESPON • TRUSTED
-    </p>
+<p>
+LIST UID FREE FIRE
+</p>
+
+<span class="subtitle">
+Fast Response • Trusted Seller
+</span>
 
 </header>
 
 <section class="dashboard">
 
-    <div class="card">
-        <h2 id="totalStock">0</h2>
-        <span>Total UID</span>
-    </div>
+<div class="card total">
 
-    <div class="card ready">
-        <h2 id="readyStock">0</h2>
-        <span>Ready</span>
-    </div>
+<h2 id="totalStock">0</h2>
 
-    <div class="card sold">
-        <h2 id="soldStock">0</h2>
-        <span>Sold</span>
-    </div>
+<span>Total UID</span>
+
+</div>
+
+<div class="card ready">
+
+<h2 id="readyStock">0</h2>
+
+<span>Ready</span>
+
+</div>
+
+<div class="card sold">
+
+<h2 id="soldStock">0</h2>
+
+<span>Sold</span>
+
+</div>
 
 </section>
 
-<section class="tools">
+<section class="search-box">
 
-    <input
-        type="text"
-        id="searchInput"
-        placeholder="Cari UID..."
-    >
+<div class="search">
 
-    <div class="filter">
+<span>🔍</span>
 
-        <button class="filterBtn active" data-filter="all">
-            Semua
-        </button>
+<input
+type="text"
+id="searchInput"
+placeholder="Cari UID atau Harga..."
+>
 
-        <button class="filterBtn" data-filter="ready">
-            Ready
-        </button>
+</div>
 
-        <button class="filterBtn" data-filter="sold">
-            Sold
-        </button>
+<div class="filter">
 
-    </div>
+<button class="filterBtn active" data-filter="all">
+ALL
+</button>
+
+<button class="filterBtn" data-filter="ready">
+READY
+</button>
+
+<button class="filterBtn" data-filter="sold">
+SOLD
+</button>
+
+</div>
+
+</section>
+
+<section class="benefit">
+
+<h3>✨ Benefit Buy UID</h3>
+
+<ul>
+
+<li>✅ UID sesuai list tersedia</li>
+
+<li>✅ Fast Response Admin</li>
+
+<li>✅ Status stok realtime</li>
+
+<li>✅ Order langsung WhatsApp</li>
+
+</ul>
 
 </section>
 
 <section class="uid-container">
 
-    <div id="uidTable" class="uid-list">
+<div id="uidTable" class="uid-list">
 
-        <!-- otomatis dari script.js -->
-
-    </div>
+</div>
 
 </section>
 
 <footer>
 
 <p>
+
 © 2026 REXXY UID STORE
+
 </p>
 
-<a
-href="https://wa.me/6285167335472"
-target="_blank"
-class="waButton">
+<span>
 
-ORDER VIA WHATSAPP
+Trusted UID Seller
 
-</a>
+</span>
 
 </footer>
 
 <script src="data.js"></script>
+
 <script src="script.js"></script>
 
 </body>
