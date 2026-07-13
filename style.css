@@ -331,3 +331,135 @@ thead{
     background: #111827;
     z-index: 10;
 }
+
+.uid-card{
+    background:#1b1630;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:16px;
+    padding:18px;
+    margin-bottom:16px;
+}
+
+.uid-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:14px;
+}
+
+.uid-row span:first-child{
+    color:#a9a9c6;
+    font-size:14px;
+}
+
+.uid-row strong{
+    color:#fff;
+    font-size:16px;
+}
+
+.card-action{
+    display:flex;
+    gap:10px;
+    margin-top:15px;
+}
+
+.card-action button{
+    flex:1;
+    height:46px;
+    border:none;
+    border-radius:10px;
+}
+
+.uid-container{
+    width:100%;
+    margin-top:20px;
+}
+
+.uid-list{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+}
+
+.uid-list{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.uid-card{
+    background:#17142b;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:18px;
+    padding:18px;
+    box-shadow:0 10px 25px rgba(0,0,0,.25);
+}
+
+.info{
+    margin-bottom:16px;
+}
+
+.label{
+    display:block;
+    color:#9e9eb7;
+    font-size:13px;
+    margin-bottom:5px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+.info h3{
+    color:#fff;
+    font-size:22px;
+    margin:0;
+    font-weight:600;
+}
+
+.button-group{
+    display:flex;
+    gap:12px;
+    margin-top:20px;
+}
+
+.button-group button{
+    flex:1;
+    height:48px;
+    border:none;
+    border-radius:12px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.copyBtn{
+    background:#3b82f6;
+    color:#fff;
+}
+
+.orderBtn{
+    background:#22c55e;
+    color:#fff;
+}
+
+.orderBtn.disabled{
+    background:#666;
+    cursor:not-allowed;
+}
+
+.status{
+    display:inline-block;
+    padding:7px 15px;
+    border-radius:999px;
+    font-weight:600;
+    font-size:14px;
+}
+
+.status.ready{
+    background:#143d2b;
+    color:#43d67d;
+}
+
+.status.sold{
+    background:#442222;
+    color:#ff5d5d;
+    }
