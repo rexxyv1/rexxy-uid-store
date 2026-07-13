@@ -83,11 +83,13 @@ function renderTable() {
 
             <td>${item.uid}</td>
 
-            <td>${new Intl.NumberFormat("id-ID", {
-    style: "currency",
-    currency: "IDR",
-    minimumFractionDigits: 0
-}).format(item.harga)}</td>
+<td>${
+    new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR",
+        minimumFractionDigits: 0
+    }).format(item.harga)
+}</td>
 
             <td>
 
