@@ -27,9 +27,9 @@ function renderTable() {
 
     const filteredData = uidData.filter(item => {
 
-        const matchSearch = item.uid
-            .toLowerCase()
-            .includes(keyword);
+        const matchSearch =
+       item.uid.toLowerCase().includes(keyword) ||
+       String(item.harga).includes(keyword);
 
         const matchFilter =
             currentFilter === "all"
@@ -42,13 +42,13 @@ function renderTable() {
 
     if(filteredData.length === 0){
 
-        tableBody.innerHTML = `
-        <tr>
-            <td colspan="4">
-                UID tidak ditemukan.
-            </td>
-        </tr>
-        `;
+    tableBody.innerHTML = `
+    <tr>
+    <td colspan="4">
+        🔍 Tidak ada UID yang cocok.
+    </td>
+</tr>
+`;
 
         return;
     }
@@ -66,14 +66,14 @@ function renderTable() {
             <button
                 class="orderBtn"
                 onclick="orderUID('${item.uid}','${item.harga}')">
-                Order
+                🛒 Order
             </button>
             `
             : `
             <button
                 class="orderBtn disabled"
                 disabled>
-                Sold Out
+                ❌ Sold Out
             </button>
             `;
 
@@ -83,7 +83,11 @@ function renderTable() {
 
             <td>${item.uid}</td>
 
-            <td>${item.harga}</td>
+            <td>${new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    minimumFractionDigits: 0
+}).format(item.harga)}</td>
 
             <td>
 
@@ -101,7 +105,7 @@ function renderTable() {
                     class="copyBtn"
                     onclick="copyUID('${item.uid}')">
 
-                    Copy
+                    📋 Copy
 
                     </button>
 
@@ -119,12 +123,28 @@ function renderTable() {
 
 }
 
-function copyUID(uid){
+function showToast(message) {
+    const toast = document.createElement("div");
+    toast.className = "toast";
+    toast.textContent = message;
 
-    navigator.clipboard.writeText(uid);
+    document.body.appendChild(toast);
 
-    alert("UID berhasil disalin!");
+    setTimeout(() => toast.classList.add("show"), 50);
 
+    setTimeout(() => {
+        toast.classList.remove("show");
+        setTimeout(() => toast.remove(), 300);
+    }, 2000);
+}
+
+async function copyUID(uid) {
+    try {
+        await navigator.clipboard.writeText(uid);
+        showToast("✅ UID berhasil disalin");
+    } catch (err) {
+        showToast("❌ Gagal menyalin UID");
+    }
 }
 
 function orderUID(uid,harga){
