@@ -78,48 +78,48 @@ function renderTable() {
             `;
 
         tableBody.innerHTML += `
+<div class="uid-card">
 
-        <tr>
+    <div class="info">
+        <span class="label">🆔 UID</span>
+        <h3>${item.uid}</h3>
+    </div>
 
-            <td>${item.uid}</td>
+    <div class="info">
+        <span class="label">💰 Harga</span>
+        <h3>${
+            new Intl.NumberFormat("id-ID",{
+                style:"currency",
+                currency:"IDR",
+                minimumFractionDigits:0
+            }).format(item.harga)
+        }</h3>
+    </div>
 
-<td>${
-    new Intl.NumberFormat("id-ID", {
-        style: "currency",
-        currency: "IDR",
-        minimumFractionDigits: 0
-    }).format(item.harga)
-}</td>
+    <div class="info">
+        <span class="label">📦 Status</span>
 
-            <td>
+        <span class="status ${item.status}">
+            ${statusText}
+        </span>
+    </div>
 
-                <span class="status ${item.status}">
-                    ${statusText}
-                </span>
+    <div class="button-group">
 
-            </td>
+        <button
+            class="copyBtn"
+            onclick="copyUID('${item.uid}')">
 
-            <td>
+            📋 COPY
 
-                <div class="action">
+        </button>
 
-                    <button
-                    class="copyBtn"
-                    onclick="copyUID('${item.uid}')">
+        ${orderButton}
 
-                    📋 Copy
+    </div>
 
-                    </button>
-
-                    ${orderButton}
-
-                </div>
-
-            </td>
-
-        </tr>
-
-        `;
+</div>
+`;
 
     });
 
