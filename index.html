@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REXXY UID STORE</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<header>
+
+    <h1>REXXY UID STORE</h1>
+
+    <p>
+        LIST UID FREE FIRE • FAST RESPON • TRUSTED
+    </p>
+
+</header>
+
+<section class="dashboard">
+
+    <div class="card">
+        <h2 id="totalStock">0</h2>
+        <span>Total UID</span>
+    </div>
+
+    <div class="card ready">
+        <h2 id="readyStock">0</h2>
+        <span>Ready</span>
+    </div>
+
+    <div class="card sold">
+        <h2 id="soldStock">0</h2>
+        <span>Sold</span>
+    </div>
+
+</section>
+
+<section class="tools">
+
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="Cari UID..."
+    >
+
+    <div class="filter">
+
+        <button class="filterBtn active" data-filter="all">
+            Semua
+        </button>
+
+        <button class="filterBtn" data-filter="ready">
+            Ready
+        </button>
+
+        <button class="filterBtn" data-filter="sold">
+            Sold
+        </button>
+
+    </div>
+
+</section>
+
+<section class="table-container">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>UID</th>
+
+<th>Harga</th>
+
+<th>Status</th>
+
+<th>Aksi</th>
+
+</tr>
+
+</thead>
+
+<tbody id="uidTable">
+
+<!-- otomatis dari data.js -->
+
+</tbody>
+
+</table>
+
+</section>
+
+<footer>
+
+<p>
+© 2026 REXXY UID STORE
+</p>
+
+<a
+href="https://wa.me/6285167335472"
+target="_blank"
+class="waButton">
+
+ORDER VIA WHATSAPP
+
+</a>
+
+</footer>
+
+<script src="data.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
