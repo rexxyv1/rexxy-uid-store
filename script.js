@@ -213,38 +213,3 @@ searchInput.addEventListener("input",renderTable);
 
 updateCounter();
 renderTable();
-
-const themeToggle = document.getElementById("themeToggle");
-
-const savedTheme = localStorage.getItem("theme");
-
-if(savedTheme === "light"){
-    document.body.classList.add("light");
-}
-
-function updateThemeIcon(){
-
-    themeToggle.textContent =
-    document.body.classList.contains("light")
-    ? "☀️"
-    : "🌙";
-
-}
-
-updateThemeIcon();
-
-
-themeToggle.onclick = ()=>{
-
-    document.body.classList.toggle("light");
-
-    localStorage.setItem(
-        "theme",
-        document.body.classList.contains("light")
-        ? "light"
-        : "dark"
-    );
-
-    updateThemeIcon();
-
-};
