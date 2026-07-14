@@ -1134,31 +1134,4 @@ login: "Guest",
 status: "ready"
 },
 
-const testimonials =
-  {
-    nama: "Rizky",
-    bintang: 5,
-    pesan: "Pelayanan cepat, UID sesuai deskripsi. Recommended!",
-  },
-  {
-    nama: "Andi",
-    bintang: 5,
-    pesan: "Admin ramah, proses order tidak sampai 5 menit.",
-  },
-  {
-    nama: "Fajar",
-    bintang: 5,
-    pesan: "Sudah beli 3 kali dan selalu aman. Mantap!",
-  },
-  {
-    nama: "Dimas",
-    bintang: 5,
-    pesan: "Harga murah dibanding seller lain, stok juga banyak.",
-  },
-  {
-    nama: "Aldi",
-    bintang: 5,
-    pesan: "Respon WhatsApp sangat cepat, langsung diproses.",
-  }
-
 ];

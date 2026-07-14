@@ -18,19 +18,52 @@ function updateCounter() {
     readyStock.textContent = ready;
     soldStock.textContent = sold;
 }
+function filterProduk() {
+    let urutan = document.getElementById("sort").value;
+    let harga = document.getElementById("harga").value;
 
-const container = document.getElementById("testimonials");
+    produk = produk.filter(item => {
 
-testimonials.forEach(item => {
-  container.innerHTML += `
-    <div class="testi-card">
-        <div class="stars">${"⭐".repeat(item.bintang)}</div>
-        <p>"${item.pesan}"</p>
-        <h4>${item.nama}</h4>
-        <span>✔ Verified Buyer</span>
-    </div>
-  `;
-});
+        // Filter status
+        if (urutan === "ready" && item.status !== "Ready") {
+            return false;
+        }
+
+        if (urutan === "sold" && item.status !== "Sold") {
+            return false;
+        }
+
+
+        // Filter harga
+        if (harga === "30-50" && (item.harga < 30000 || item.harga > 50000)) {
+            return false;
+        }
+
+        if (harga === "under30" && item.harga >= 30000) {
+            return false;
+        }
+
+        if (harga === "above50" && item.harga <= 50000) {
+            return false;
+        }
+
+        return true;
+    });
+
+
+    // Sorting
+    if (urutan === "murah") {
+        produk.sort((a,b)=>a.harga-b.harga);
+    }
+
+    if (urutan === "mahal") {
+        produk.sort((a,b)=>b.harga-a.harga);
+    }
+
+    if (urutan === "terbaru") {
+        produk.sort((a,b)=>b.tanggal-a.tanggal);
+    }
+}
 
 function renderTable() {
 
