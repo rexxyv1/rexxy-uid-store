@@ -80,48 +80,22 @@ function renderTable() {
         tableBody.innerHTML += `
 <div class="uid-card">
 
+    ${item.promo ? `<span class="promo-badge">🔥 PROMO</span>` : ""}
+
     <div class="info">
         <span class="label">🆔 UID</span>
         <h3>${item.uid}</h3>
     </div>
 
-    const hargaHTML = item.promo
-? `
-<div class="price-box">
-
-<div class="old-price">
-${new Intl.NumberFormat("id-ID",{
-style:"currency",
-currency:"IDR",
-minimumFractionDigits:0
-}).format(item.hargaAsli)}
-</div>
-
-<div class="price">
-${new Intl.NumberFormat("id-ID",{
-style:"currency",
-currency:"IDR",
-minimumFractionDigits:0
-}).format(item.harga)}
-</div>
-
-</div>
-`
-: `
-<div class="price">
-${new Intl.NumberFormat("id-ID",{
-style:"currency",
-currency:"IDR",
-minimumFractionDigits:0
-}).format(item.harga)}
-</div>
-`;
+    <div class="info">
+        <span class="label">💰 Harga</span>
+        ${hargaHTML}
     </div>
-    
-<div class="info">
-    <span class="label">🔑 LOGIN</span>
-    <h4 class="login-type">${item.login}</h4>
-</div>
+
+    <div class="info">
+        <span class="label">🔑 Login</span>
+        <h4 class="login-type">${item.login}</h4>
+    </div>
 
     <div class="info">
         <span class="label">📦 Status</span>
