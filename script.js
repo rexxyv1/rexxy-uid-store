@@ -95,6 +95,11 @@ function renderTable() {
             }).format(item.harga)
         }</h3>
     </div>
+    
+<div class="info">
+    <span class="label">🔑 LOGIN</span>
+    <h4 class="login-type">${item.login}</h4>
+</div>
 
     <div class="info">
         <span class="label">📦 Status</span>
