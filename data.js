@@ -279,4 +279,22 @@ login: "Guest",
 status: "sold"
 },
 
+{
+uid: "16137555558",
+hargaAsli: 35000,
+harga: 25000,
+promo: true,
+login: "Guest",
+status: "ready"
+},
+
+{
+uid: "16124191992",
+hargaAsli: 35000,
+harga: 25000,
+promo: true,
+login: "Guest",
+status: "ready"
+},
+
 ];
