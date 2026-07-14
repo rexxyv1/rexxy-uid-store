@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login</title>
+
+<style>
+body{
+    margin:0;
+    background:#0d0719;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    font-family:Arial,sans-serif;
+}
+
+.box{
+    width:330px;
+    background:#1b1433;
+    padding:30px;
+    border-radius:18px;
+    box-shadow:0 0 30px rgba(130,90,255,.25);
+}
+
+h2{
+    color:white;
+    text-align:center;
+    margin-bottom:25px;
+}
+
+input{
+    width:100%;
+    padding:13px;
+    margin-bottom:15px;
+    border:none;
+    border-radius:10px;
+    outline:none;
+    background:#2b2247;
+    color:white;
+    box-sizing:border-box;
+}
+
+button{
+    width:100%;
+    padding:13px;
+    border:none;
+    border-radius:10px;
+    background:#7b4dff;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#9268ff;
+}
+
+#error{
+    color:#ff6d6d;
+    margin-top:10px;
+    text-align:center;
+}
+</style>
+
+</head>
+<body>
+
+<div class="box">
+
+<h2>ADMIN LOGIN</h2>
+
+<input id="user" placeholder="Username">
+
+<input id="pass" type="password" placeholder="Password">
+
+<button onclick="login()">MASUK</button>
+
+<p id="error"></p>
+
+</div>
+
+<script>
+
+const USERNAME="admin";
+const PASSWORD="rexxy123";
+
+function login(){
+
+const u=document.getElementById("user").value;
+const p=document.getElementById("pass").value;
+
+if(u===USERNAME && p===PASSWORD){
+
+localStorage.setItem("admin","true");
+
+location.href="dashboard.html";
+
+}else{
+
+document.getElementById("error").innerHTML="Username atau Password salah";
+
+}
+
+}
+
+</script>
+
+</body>
+</html>

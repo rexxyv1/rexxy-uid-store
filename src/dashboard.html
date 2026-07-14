@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>REXXY ADMIN PANEL</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<div class="logo">
+<h2>REXXY</h2>
+<span>UID STORE</span>
+</div>
+
+<ul>
+
+<li class="active">
+🏠 Dashboard
+</li>
+
+<li>
+📦 Data UID
+</li>
+
+<li>
+📊 Statistik
+</li>
+
+<li>
+⚙ Pengaturan
+</li>
+
+<li onclick="logout()">
+🚪 Logout
+</li>
+
+</ul>
+
+</div>
+
+<div class="main">
+
+<header>
+
+<div>
+
+<h1>Dashboard Admin</h1>
+
+<p>Selamat datang kembali.</p>
+
+</div>
+
+<button class="addBtn" onclick="openModal()">
+
++ Tambah UID
+
+</button>
+
+</header>
+
+<div class="cards">
+
+<div class="card">
+
+<span>Total UID</span>
+
+<h2 id="totalUID">0</h2>
+
+</div>
+
+<div class="card ready">
+
+<span>Ready</span>
+
+<h2 id="readyUID">0</h2>
+
+</div>
+
+<div class="card sold">
+
+<span>Sold</span>
+
+<h2 id="soldUID">0</h2>
+
+</div>
+
+<div class="card income">
+
+<span>Total Pendapatan</span>
+
+<h2 id="income">
+
+Rp0
+
+</h2>
+
+</div>
+
+</div>
+
+<div class="toolbar">
+
+<input
+type="text"
+id="search"
+placeholder="Cari UID..."
+onkeyup="render()">
+
+<select id="filter" onchange="render()">
+
+<option value="all">
+Semua
+</option>
+
+<option value="Ready">
+Ready
+</option>
+
+<option value="Sold">
+Sold
+</option>
+
+</select>
+
+</div>
+
+<div class="table-area">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>UID</th>
+
+<th>Harga</th>
+
+<th>Login</th>
+
+<th>Status</th>
+
+<th>Aksi</th>
+
+</tr>
+
+</thead>
+
+<tbody id="tbody">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<!-- ================= MODAL ================= -->
+
+<div id="modal" class="modal">
+
+<div class="modal-content">
+
+<h2>Tambah UID</h2>
+
+<input
+id="uid"
+placeholder="UID">
+
+<input
+id="harga"
+placeholder="Harga">
+
+<select id="login">
+
+<option>Guest</option>
+
+<option>Google</option>
+
+<option>Facebook</option>
+
+<option>VK</option>
+
+</select>
+
+<select id="status">
+
+<option>Ready</option>
+
+<option>Sold</option>
+
+</select>
+
+<textarea
+id="deskripsi"
+placeholder="Deskripsi akun..."
+rows="4"></textarea>
+
+<label>Upload Gambar UID</label>
+
+<input
+type="file"
+id="gambar"
+accept="image/*"
+onchange="previewImage(event)">
+
+<img
+id="preview"
+style="
+display:none;
+width:100%;
+margin-top:15px;
+border-radius:12px;
+">
+
+<div class="modalButton">
+
+<button
+class="cancel"
+onclick="closeModal()">
+
+Batal
+
+</button>
+
+<button
+class="save"
+onclick="saveUID()">
+
+Simpan
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<div id="toast" class="toast">
+
+Data berhasil disimpan
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
