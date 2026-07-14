@@ -43,12 +43,10 @@ function renderTable() {
     if(filteredData.length === 0){
 
     tableBody.innerHTML = `
-    <tr>
-    <td colspan="4">
-        🔍 Tidak ada UID yang cocok.
-    </td>
-</tr>
-`;
+    <div class="empty">
+    🔍 Tidak ada UID yang cocok.
+    </div>
+    `;
 
         return;
     }
@@ -76,6 +74,34 @@ function renderTable() {
                 ❌ Sold Out
             </button>
             `;
+
+        const hargaHTML = item.promo
+        ? `
+        <div class="old-price">
+        ${new Intl.NumberFormat("id-ID",{
+            style:"currency",
+            currency:"IDR",
+            minimumFractionDigits:0
+        }).format(item.hargaAsli)}
+        </div>
+        
+        <div class="price">
+        ${new Intl.NumberFormat("id-ID",{
+            style:"currency",
+            currency:"IDR",
+            minimumFractionDigits:0
+        }).format(item.harga)}
+        </div>
+        `
+        : `
+        <div class="price">
+        ${new Intl.NumberFormat("id-ID",{
+            style:"currency",
+            currency:"IDR",
+            minimumFractionDigits:0
+        }).format(item.harga)}
+        </div>
+        `;
 
         tableBody.innerHTML += `
 <div class="uid-card">
