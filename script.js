@@ -216,25 +216,35 @@ renderTable();
 
 const themeToggle = document.getElementById("themeToggle");
 
-if(localStorage.getItem("theme") === "light"){
+const savedTheme = localStorage.getItem("theme");
+
+if(savedTheme === "light"){
     document.body.classList.add("light");
-    themeToggle.textContent = "☀️";
 }
 
-themeToggle.addEventListener("click",()=>{
+function updateThemeIcon(){
+
+    themeToggle.textContent =
+    document.body.classList.contains("light")
+    ? "☀️"
+    : "🌙";
+
+}
+
+updateThemeIcon();
+
+
+themeToggle.onclick = ()=>{
 
     document.body.classList.toggle("light");
 
-    if(document.body.classList.contains("light")){
+    localStorage.setItem(
+        "theme",
+        document.body.classList.contains("light")
+        ? "light"
+        : "dark"
+    );
 
-        localStorage.setItem("theme","light");
-        themeToggle.textContent = "☀️";
+    updateThemeIcon();
 
-    }else{
-
-        localStorage.setItem("theme","dark");
-        themeToggle.textContent = "🌙";
-
-    }
-
-});
+};
