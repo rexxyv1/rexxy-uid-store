@@ -1134,9 +1134,7 @@ login: "Guest",
 status: "ready"
 },
 
-];
-
-const testimonials = [
+const testimonials =
   {
     nama: "Rizky",
     bintang: 5,
