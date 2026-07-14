@@ -81,4 +81,94 @@ login: "Guest",
 status: "ready"
 },
 
+{
+uid: "16132864444",
+hargaAsli: 35000,
+harga: 25000,
+promo: true,
+login: "Guest",
+status: "ready"
+},
+
+{
+uid: "16132883333",
+hargaAsli: 35000,
+harga: 25000,
+promo: true,
+login: "Guest",
+status: "ready"
+},
+
+{
+uid: "16132886666",
+hargaAsli: 35000,
+harga: 25000,
+promo: true,
+login: "Guest",
+status: "ready"
+},
+
+{
+uid: "16132886669",
+hargaAsli: 35000,
+harga: 25000,
+promo: true,
+login: "Guest",
+status: "ready"
+},
+
+{
+uid: "16132944448",
+hargaAsli: 35000,
+harga: 25000,
+promo: true,
+login: "Guest",
+status: "ready"
+},
+
+{
+uid: "16132962222",
+hargaAsli: 35000,
+harga: 25000,
+promo: true,
+login: "Guest",
+status: "ready"
+},
+
+{
+uid: "16132976666",
+hargaAsli: 35000,
+harga: 25000,
+promo: true,
+login: "Guest",
+status: "ready"
+},
+
+{
+uid: "16132997777",
+hargaAsli: 35000,
+harga: 25000,
+promo: true,
+login: "Guest",
+status: "ready"
+},
+
+{
+uid: "16132999941",
+hargaAsli: 35000,
+harga: 25000,
+promo: true,
+login: "Guest",
+status: "ready"
+},
+
+{
+uid: "16132222036",
+hargaAsli: 35000,
+harga: 25000,
+promo: true,
+login: "Guest",
+status: "ready"
+},
+
 ];
