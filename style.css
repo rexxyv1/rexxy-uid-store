@@ -1,6 +1,5 @@
 /* ===========================
    REXXY UID STORE V2
-   PART 1
 =========================== */
 
 *{
@@ -8,6 +7,10 @@
     padding:0;
     box-sizing:border-box;
 }
+
+/* ===========================
+   DARK THEME (DEFAULT)
+=========================== */
 
 :root{
 
@@ -25,30 +28,86 @@
 
     --white:#ffffff;
     --text:#d5d2ea;
+
     --border:rgba(255,255,255,.08);
 
 }
 
+/* ===========================
+   LIGHT THEME
+=========================== */
+
+body.light{
+
+    --bg:#f5f7fb;
+    --bg2:#eef2f7;
+
+    --card:#ffffff;
+    --card2:#f8f9fc;
+
+    --primary:#8B5CF6;
+    --primary2:#6D28D9;
+
+    --green:#16a34a;
+    --red:#dc2626;
+
+    --white:#1f2937;
+    --text:#6b7280;
+
+    --border:#d6d9e2;
+
+}
+
 html{
-
-scroll-behavior:smooth;
-
+    scroll-behavior:smooth;
 }
 
 body{
 
-font-family:'Poppins',sans-serif;
+    font-family:'Poppins',sans-serif;
 
-background:
-linear-gradient(180deg,#080612,#120c23,#090714);
+    background:linear-gradient(
+        180deg,
+        var(--bg),
+        var(--bg2),
+        var(--bg)
+    );
 
-color:var(--white);
+    color:var(--white);
 
-min-height:100vh;
+    min-height:100vh;
 
-overflow-x:hidden;
+    overflow-x:hidden;
 
-position:relative;
+    position:relative;
+
+    transition:.3s;
+
+}
+
+.bg-effect{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:-1;
+
+    background:
+    radial-gradient(circle at top left,#8b5cf622,transparent 35%),
+    radial-gradient(circle at bottom right,#6d28d922,transparent 40%),
+    radial-gradient(circle at center,#7c3aed10,transparent 60%);
+
+    transition:.3s;
+
+}
+
+body.light .bg-effect{
+
+    background:
+    radial-gradient(circle at top left,#8b5cf615,transparent 35%),
+    radial-gradient(circle at bottom right,#6d28d915,transparent 40%),
+    radial-gradient(circle at center,#7c3aed08,transparent 60%);
 
 }
 
@@ -1331,4 +1390,5 @@ themeToggle.onclick = ()=>{
     updateThemeIcon();
 
 };
+
    
