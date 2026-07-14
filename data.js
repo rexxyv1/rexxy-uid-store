@@ -1,5 +1,3 @@
-const uidData = [
-
 {
     uid: "123456789",
     hargaAsli: 35000,
@@ -8,14 +6,11 @@ const uidData = [
     login: "Guest",
     status: "ready"
 },
-
 {
     uid: "987654321",
     hargaAsli: 40000,
     harga: 40000,
     promo: false,
     login: "Google",
-    status: "ready"
+    status: "sold"
 }
-
-];
