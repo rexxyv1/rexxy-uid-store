@@ -1109,3 +1109,226 @@ font-weight:700;
 color:#FFD54F;
 
 }
+
+/* ===========================
+   LIGHT MODE
+=========================== */
+
+body.light{
+
+--bg:#f5f7fb;
+--bg2:#eef2f7;
+
+--card:#ffffff;
+--card2:#f7f8fc;
+
+--white:#1f2937;
+--text:#6b7280;
+
+--border:#d8dbe4;
+
+background:linear-gradient(
+180deg,
+#f7f8fc,
+#eef2f7,
+#ffffff
+);
+
+}
+
+body.light .bg-effect{
+
+background:
+
+radial-gradient(circle at top left,#8b5cf615,transparent 35%),
+
+radial-gradient(circle at bottom right,#6d28d915,transparent 40%),
+
+radial-gradient(circle at center,#7c3aed10,transparent 60%);
+
+}
+
+/* ===========================
+   AUTO THEME COLOR
+=========================== */
+
+body{
+
+background:var(--bg);
+
+color:var(--white);
+
+transition:.3s;
+
+}
+
+header h1,
+.info h3,
+.price{
+
+color:var(--white);
+
+transition:.3s;
+
+}
+
+.search input{
+
+color:var(--white);
+
+}
+
+.search input::placeholder{
+
+color:var(--text);
+
+}
+
+.uid-card,
+.card,
+.benefit,
+.search,
+.empty{
+
+background:linear-gradient(
+180deg,
+var(--card),
+var(--card2)
+);
+
+border:1px solid var(--border);
+
+transition:.3s;
+
+}
+
+footer{
+
+color:var(--text);
+
+border-top:1px solid var(--border);
+
+}
+
+body.light .price{
+
+color:#d97706;
+
+}
+
+body.light .subtitle{
+
+background:#ede9fe;
+
+border-color:#c4b5fd;
+
+color:#6d28d9;
+
+}
+
+body.light .login-type{
+
+background:#ede9fe;
+
+color:#6d28d9;
+
+border-color:#c4b5fd;
+
+}
+
+body.light .search{
+
+box-shadow:none;
+
+}
+
+body.light .uid-card::before{
+
+opacity:.45;
+
+}
+
+.theme-toggle{
+
+position:fixed;
+
+top:18px;
+right:18px;
+
+width:52px;
+height:52px;
+
+border:none;
+
+border-radius:50%;
+
+background:linear-gradient(
+135deg,
+#8B5CF6,
+#6D28D9
+);
+
+color:#fff;
+
+font-size:22px;
+
+cursor:pointer;
+
+box-shadow:0 10px 25px rgba(139,92,246,.35);
+
+transition:.3s;
+
+z-index:9999;
+
+}
+
+.theme-toggle:hover{
+
+transform:rotate(180deg) scale(1.08);
+
+}
+
+body.light .theme-toggle{
+
+background:linear-gradient(
+135deg,
+#f59e0b,
+#fbbf24
+);
+
+}
+
+const themeToggle = document.getElementById("themeToggle");
+
+const savedTheme = localStorage.getItem("theme");
+
+if(savedTheme){
+    document.body.classList.toggle("light", savedTheme === "light");
+}else if(window.matchMedia("(prefers-color-scheme: light)").matches){
+    document.body.classList.add("light");
+}
+
+function updateThemeIcon(){
+    themeToggle.textContent =
+        document.body.classList.contains("light")
+        ? "☀️"
+        : "🌙";
+}
+
+updateThemeIcon();
+
+themeToggle.onclick = ()=>{
+
+    document.body.classList.toggle("light");
+
+    localStorage.setItem(
+        "theme",
+        document.body.classList.contains("light")
+        ? "light"
+        : "dark"
+    );
+
+    updateThemeIcon();
+
+};
+   
