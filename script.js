@@ -85,15 +85,37 @@ function renderTable() {
         <h3>${item.uid}</h3>
     </div>
 
-    <div class="info">
-        <span class="label">💰 Harga</span>
-        <h3>${
-            new Intl.NumberFormat("id-ID",{
-                style:"currency",
-                currency:"IDR",
-                minimumFractionDigits:0
-            }).format(item.harga)
-        }</h3>
+    const hargaHTML = item.promo
+? `
+<div class="price-box">
+
+<div class="old-price">
+${new Intl.NumberFormat("id-ID",{
+style:"currency",
+currency:"IDR",
+minimumFractionDigits:0
+}).format(item.hargaAsli)}
+</div>
+
+<div class="price">
+${new Intl.NumberFormat("id-ID",{
+style:"currency",
+currency:"IDR",
+minimumFractionDigits:0
+}).format(item.harga)}
+</div>
+
+</div>
+`
+: `
+<div class="price">
+${new Intl.NumberFormat("id-ID",{
+style:"currency",
+currency:"IDR",
+minimumFractionDigits:0
+}).format(item.harga)}
+</div>
+`;
     </div>
     
 <div class="info">
