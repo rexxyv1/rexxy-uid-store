@@ -1061,3 +1061,51 @@ font-size:14px;
 font-weight:600;
 
 }
+
+/* ===========================
+   PROMO SYSTEM
+=========================== */
+
+.promo-badge{
+
+position:absolute;
+
+top:15px;
+left:15px;
+
+background:#ff3b30;
+color:#fff;
+
+padding:6px 12px;
+
+border-radius:999px;
+
+font-size:12px;
+
+font-weight:bold;
+
+box-shadow:0 8px 20px rgba(255,59,48,.35);
+
+}
+
+.old-price{
+
+font-size:14px;
+
+color:#888;
+
+text-decoration:line-through;
+
+margin-bottom:3px;
+
+}
+
+.price{
+
+font-size:28px;
+
+font-weight:700;
+
+color:#FFD54F;
+
+}
