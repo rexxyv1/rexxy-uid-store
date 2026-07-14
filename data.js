@@ -1,3 +1,5 @@
+const uidData = [
+
 {
     uid: "123456789",
     hargaAsli: 35000,
@@ -6,6 +8,7 @@
     login: "Guest",
     status: "ready"
 },
+
 {
     uid: "987654321",
     hargaAsli: 40000,
@@ -14,3 +17,5 @@
     login: "Google",
     status: "sold"
 }
+
+];
