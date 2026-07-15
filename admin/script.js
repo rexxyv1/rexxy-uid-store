@@ -3,6 +3,22 @@ REXXY ADMIN PANEL
 SCRIPT.JS
 ========================================== */
 
+// ===============================
+// FIREBASE FIRESTORE
+// ===============================
+
+const uidCollection = db.collection("uids");
+
+async function simpanUIDFirebase(data) {
+    try {
+        await uidCollection.add(data);
+        alert("✅ UID berhasil disimpan ke Firebase");
+    } catch (err) {
+        console.error(err);
+        alert("❌ Gagal menyimpan UID");
+    }
+}
+
 /* ==========================
 LOGIN CHECK
 ========================== */
