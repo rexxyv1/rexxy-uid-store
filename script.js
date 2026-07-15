@@ -1,222 +1,452 @@
-const tableBody = document.getElementById("uidTable");
-const searchInput = document.getElementById("searchInput");
+/* ==========================================
+REXXY ADMIN PANEL
+SCRIPT.JS
+========================================== */
 
-const totalStock = document.getElementById("totalStock");
-const readyStock = document.getElementById("readyStock");
-const soldStock = document.getElementById("soldStock");
+// ===============================
+// FIREBASE FIRESTORE
+// ===============================
 
-const filterButtons = document.querySelectorAll(".filterBtn");
+const uidCollection = db.collection("uids");
 
-let currentFilter = "all";
-
-function updateCounter() {
-    totalStock.textContent = uidData.length;
-
-    const ready = uidData.filter(item => item.status === "ready").length;
-    const sold = uidData.filter(item => item.status === "sold").length;
-
-    readyStock.textContent = ready;
-    soldStock.textContent = sold;
+async function simpanUIDFirebase(data) {
+    try {
+        await uidCollection.add(data);
+        alert("✅ UID berhasil disimpan ke Firebase");
+    } catch (err) {
+        console.error(err);
+        alert("❌ Gagal menyimpan UID");
+    }
 }
 
-function renderTable() {
+/* ==========================
+LOGIN CHECK
+========================== */
 
-    const keyword = searchInput.value.toLowerCase().trim();
+if(localStorage.getItem("admin") !== "true"){
 
-    tableBody.innerHTML = "";
+    location.href="login.html";
 
-    const filteredData = uidData.filter(item => {
+}
 
-        const matchSearch =
-       item.uid.toLowerCase().includes(keyword) ||
-       String(item.harga).includes(keyword);
+/* ==========================
+DATABASE
+========================== */
 
-        const matchFilter =
-            currentFilter === "all"
-            ? true
-            : item.status === currentFilter;
+let uidData = JSON.parse(
+    localStorage.getItem("uidData")
+) || [
 
-        return matchSearch && matchFilter;
+{
+    uid:"16132444469",
+    harga:25000,
+    login:"Guest",
+    status:"Ready",
+    deskripsi:"UID Premium"
+},
 
-    });
+{
+    uid:"19222244444",
+    harga:30000,
+    login:"Google",
+    status:"Sold",
+    deskripsi:"UID Langka"
+}
 
-    if(filteredData.length === 0){
+];
 
-    tableBody.innerHTML = `
-    <div class="empty">
-    🔍 Tidak ada UID yang cocok.
-    </div>
-    `;
+/* ==========================
+ELEMENT
+========================== */
+
+const tbody =
+document.getElementById("tbody");
+
+const search =
+document.getElementById("search");
+
+const filter =
+document.getElementById("filter");
+
+const modal =
+document.getElementById("modal");
+
+const toast =
+document.getElementById("toast");
+
+/* ==========================
+SAVE DATABASE
+========================== */
+
+function saveDatabase(){
+
+    localStorage.setItem(
+        "uidData",
+        JSON.stringify(uidData)
+    );
+
+}
+
+/* ==========================
+TOAST
+========================== */
+
+function showToast(text){
+
+    toast.innerHTML=text;
+
+    toast.classList.add("show");
+
+    setTimeout(()=>{
+
+        toast.classList.remove("show");
+
+    },2500);
+
+}
+
+/* ==========================
+OPEN MODAL
+========================== */
+
+function openModal(){
+    alert("OPEN MODAL DIPANGGIL");
+    modal.style.display = "flex";
+}
+
+/* ==========================
+CLOSE MODAL
+========================== */
+
+function closeModal(){
+
+    modal.style.display="none";
+
+}
+
+function previewImage(event){
+
+const file=event.target.files[0];
+
+if(!file)return;
+
+const reader=new FileReader();
+
+reader.onload=function(e){
+
+document.getElementById("preview").src=e.target.result;
+
+document.getElementById("preview").style.display="block";
+
+}
+
+reader.readAsDataURL(file);
+
+}
+
+/* ==========================
+SAVE UID
+========================== */
+
+async function saveUID(){
+
+    const uid = document.getElementById("uid").value.trim();
+
+    const harga = Number(document.getElementById("harga").value);
+
+    const login = document.getElementById("login").value;
+
+    const status = document.getElementById("status").value;
+
+    const deskripsi = document.getElementById("deskripsi").value;
+
+    const gambar = document.getElementById("preview").src || "";
+
+    if(uid==="" || !harga){
+
+        alert("Lengkapi data");
 
         return;
+
     }
 
-    filteredData.forEach(item => {
+    const data={
 
-        const statusText =
-            item.status === "ready"
-            ? "🟢 Ready"
-            : "🔴 Sold";
+        uid,
+        harga,
+        login,
+        status,
+        deskripsi,
+        gambar,
+        createdAt:firebase.firestore.FieldValue.serverTimestamp()
 
-        const orderButton =
-            item.status === "ready"
-            ? `
-            <button
-                class="orderBtn"
-                onclick="orderUID('${item.uid}','${item.harga}')">
-                🛒 Order
-            </button>
-            `
-            : `
-            <button
-                class="orderBtn disabled"
-                disabled>
-                ❌ Sold Out
-            </button>
-            `;
+    };
 
-        const hargaHTML = item.promo
-        ? `
-        <div class="old-price">
-        ${new Intl.NumberFormat("id-ID",{
-            style:"currency",
-            currency:"IDR",
-            minimumFractionDigits:0
-        }).format(item.hargaAsli)}
-        </div>
-        
-        <div class="price">
-        ${new Intl.NumberFormat("id-ID",{
-            style:"currency",
-            currency:"IDR",
-            minimumFractionDigits:0
-        }).format(item.harga)}
-        </div>
-        `
-        : `
-        <div class="price">
-        ${new Intl.NumberFormat("id-ID",{
-            style:"currency",
-            currency:"IDR",
-            minimumFractionDigits:0
-        }).format(item.harga)}
-        </div>
+    try{
+
+        await db.collection("uids").add(data);
+
+        showToast("UID berhasil ditambahkan");
+
+        closeModal();
+
+        document.getElementById("uid").value="";
+        document.getElementById("harga").value="";
+        document.getElementById("deskripsi").value="";
+        document.getElementById("preview").style.display="none";
+
+    }catch(err){
+
+        console.error(err);
+
+        alert(err.message);
+
+    }
+
+}
+
+/* ==========================
+DELETE UID
+========================== */
+
+function deleteUID(index){
+
+    if(
+        !confirm("Hapus UID ini ?")
+    ) return;
+
+    uidData.splice(index,1);
+
+    saveDatabase();
+
+    render();
+
+    showToast("UID berhasil dihapus");
+
+}
+
+/* ==========================
+EDIT UID
+========================== */
+
+function editUID(index){
+
+    let item = uidData[index];
+
+    const hargaBaru = prompt(
+        "Harga Baru",
+        item.harga
+    );
+
+    if(hargaBaru===null) return;
+
+    item.harga = Number(hargaBaru);
+
+    saveDatabase();
+
+    render();
+
+    showToast("Data berhasil diupdate");
+
+}
+
+/* ==========================
+STATISTIC
+========================== */
+
+function updateStatistic(){
+
+    let total =
+    uidData.length;
+
+    let ready =
+    uidData.filter(
+        x=>x.status==="Ready"
+    ).length;
+
+    let sold =
+    uidData.filter(
+        x=>x.status==="Sold"
+    ).length;
+
+    let income =
+    uidData
+    .filter(
+        x=>x.status==="Sold"
+    )
+    .reduce(
+        (a,b)=>a+b.harga,
+        0
+    );
+
+    document.getElementById(
+        "totalUID"
+    ).innerHTML=total;
+
+    document.getElementById(
+        "readyUID"
+    ).innerHTML=ready;
+
+    document.getElementById(
+        "soldUID"
+    ).innerHTML=sold;
+
+    document.getElementById(
+        "income"
+    ).innerHTML=
+    "Rp" +
+    income.toLocaleString(
+        "id-ID"
+    );
+
+}
+
+/* ==========================
+RENDER TABLE
+========================== */
+
+function render(){
+
+    let keyword =
+    search.value.toLowerCase();
+
+    let statusFilter =
+    filter.value;
+
+    let html="";
+
+    uidData
+    .filter(item=>{
+
+        let cocokUID =
+        item.uid
+        .toLowerCase()
+        .includes(keyword);
+
+        let cocokStatus =
+        statusFilter==="all"
+        ||
+        item.status===statusFilter;
+
+        return cocokUID
+        &&
+        cocokStatus;
+
+    })
+
+    .forEach((item,index)=>{
+
+        html += `
+
+        <tr>
+
+            <td>${item.uid}</td>
+
+            <td>
+            Rp${item.harga.toLocaleString("id-ID")}
+            </td>
+
+            <td>${item.login}</td>
+
+            <td>
+
+                <span class="status ${item.status.toLowerCase()}">
+
+                ${item.status}
+
+                </span>
+
+            </td>
+
+            <td>
+
+                <div class="action">
+
+                    <button
+                    class="editBtn"
+                    onclick="editUID(${index})">
+
+                    Edit
+
+                    </button>
+
+                    <button
+                    class="deleteBtn"
+                    onclick="deleteUID(${index})">
+
+                    Hapus
+
+                    </button>
+
+                </div>
+
+            </td>
+
+        </tr>
+
         `;
 
-        tableBody.innerHTML += `
-<div class="uid-card">
-
-    ${item.promo ? `<span class="promo-badge">🔥 PROMO</span>` : ""}
-
-    <div class="info">
-        <span class="label">🆔 UID</span>
-        <h3>${item.uid}</h3>
-    </div>
-
-    <div class="info">
-        <span class="label">💰 Harga</span>
-        ${hargaHTML}
-    </div>
-
-    <div class="info">
-        <span class="label">🔑 Login</span>
-        <h4 class="login-type">${item.login}</h4>
-    </div>
-
-    <div class="info">
-        <span class="label">📦 Status</span>
-
-        <span class="status ${item.status}">
-            ${statusText}
-        </span>
-    </div>
-
-    <div class="button-group">
-
-        <button
-            class="copyBtn"
-            onclick="copyUID('${item.uid}')">
-
-            📋 COPY
-
-        </button>
-
-        ${orderButton}
-
-    </div>
-
-</div>
-`;
-
     });
 
+    tbody.innerHTML=html;
+
+    updateStatistic();
+
 }
 
-function showToast(message) {
-    const toast = document.createElement("div");
-    toast.className = "toast";
-    toast.textContent = message;
+/* ==========================
+LOGOUT
+========================== */
 
-    document.body.appendChild(toast);
+function logout(){
 
-    setTimeout(() => toast.classList.add("show"), 50);
+    localStorage.removeItem(
+        "admin"
+    );
 
-    setTimeout(() => {
-        toast.classList.remove("show");
-        setTimeout(() => toast.remove(), 300);
-    }, 2000);
+    location.href=
+    "login.html";
+
 }
 
-async function copyUID(uid) {
-    try {
-        await navigator.clipboard.writeText(uid);
-        showToast("✅ UID berhasil disalin");
-    } catch (err) {
-        showToast("❌ Gagal menyalin UID");
+/* ==========================
+AUTO CLOSE MODAL
+========================== */
+
+window.onclick=function(e){
+
+    if(e.target===modal){
+
+        closeModal();
+
     }
-}
-
-function orderUID(uid,harga){
-
-    const text =
-`Halo Admin, saya ingin membeli UID berikut.
-
-UID : ${uid}
-Harga : ${harga}
-
-Apakah masih tersedia?`;
-
-    const url =
-`https://wa.me/6285167335472?text=${encodeURIComponent(text)}`;
-
-    window.open(url,"_blank");
 
 }
 
-filterButtons.forEach(btn=>{
+/* ==========================
+INIT
+========================== */
 
-    btn.addEventListener("click",()=>{
+db.collection("uids")
 
-        filterButtons.forEach(x=>x.classList.remove("active"));
+.onSnapshot((snapshot)=>{
 
-        btn.classList.add("active");
+    uidData=[];
 
-        currentFilter = btn.dataset.filter;
+    snapshot.forEach((doc)=>{
 
-        renderTable();
+        uidData.push({
+
+            id:doc.id,
+
+            ...doc.data()
+
+        });
 
     });
+
+    render();
 
 });
 
-/* ==========================================
-DATABASE FIREBASE
-========================================== */
-
-let uidData = [];
-
-searchInput.addEventListener("input",renderTable);
-
-updateCounter();
-renderTable();
-
+render();
