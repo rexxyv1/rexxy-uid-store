@@ -346,10 +346,10 @@ function render(){
 
                     <button
                     class="editBtn"
-                    onclick="editUID(${index})">
-
+                    onclick="openEditModal(${index})">
+                    
                     Edit
-
+                    
                     </button>
 
                     <button
@@ -404,6 +404,32 @@ window.onclick=function(e){
     }
 
 }
+
+/* ==========================
+EDIT STOK ADMIN PANEL
+========================== */
+
+let currentDoc = "";
+
+function openEditModal(index){
+
+    const item = uidData[index];
+
+    currentDoc = item.id;
+
+    document.getElementById("editUID").value = item.uid;
+    document.getElementById("editHarga").value = item.harga;
+    document.getElementById("editLogin").value = item.login;
+    document.getElementById("editStatus").value = item.status;
+
+    document.getElementById("editModal").style.display = "flex";
+}
+
+function closeEditModal(){
+
+    document.getElementById("editModal").style.display = "none";
+}
+
 
 /* ==========================
 INIT

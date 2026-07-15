@@ -264,7 +264,50 @@ console.log("db =", typeof db);
 </script>
 
 <script src="script.js"></script>
-<script src="script.js"></script>
+
+<div id="editModal" class="modal">
+
+    <div class="modal-content">
+
+        <h2>Edit UID</h2>
+
+        <label>UID</label>
+        <input type="text" id="editUID" readonly>
+
+        <label>Harga</label>
+        <input type="number" id="editHarga">
+
+        <label>Login</label>
+        <select id="editLogin">
+            <option>Guest</option>
+            <option>Google</option>
+            <option>Facebook</option>
+            <option>VK</option>
+            <option>Apple</option>
+        </select>
+
+        <label>Status</label>
+
+        <select id="editStatus">
+            <option>Ready</option>
+            <option>Sold</option>
+        </select>
+
+        <div class="modal-button">
+
+            <button onclick="closeEditModal()">
+                Batal
+            </button>
+
+            <button onclick="saveEdit()">
+                Simpan
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
 
 </body>
 </html>
