@@ -819,3 +819,67 @@ object-fit:cover;
 max-height:220px;
 
 }
+
+/* ==========================
+ACCOUNT TABLE STYLE
+========================== */
+
+#accountTable tr {
+    background: #161b2e;
+    border-radius: 12px;
+}
+
+#accountTable td {
+    padding: 14px;
+    color: white;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+
+#accountTable tr:hover {
+    background: #242b4a;
+    transition: 0.3s;
+}
+
+
+/* Header tabel akun */
+
+#accountPage table thead {
+    background: linear-gradient(135deg,#6c5ce7,#00cec9);
+}
+
+#accountPage table th {
+    padding: 15px;
+    color: white;
+    font-weight: 600;
+}
+
+
+/* Kolom ID FF */
+
+#accountTable td:nth-child(1){
+    color:#00cec9;
+    font-weight:600;
+}
+
+
+/* Kolom UID */
+
+#accountTable td:nth-child(2){
+    color:#74b9ff;
+    font-weight:600;
+}
+
+
+/* Kolom Password */
+
+#accountTable td:nth-child(3){
+    color:#fdcb6e;
+}
+
+
+/* Status */
+
+#accountTable td:nth-child(4){
+    font-weight:bold;
+}
