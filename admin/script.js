@@ -35,12 +35,12 @@ DATABASE
 ========================== */
 
 let uidData = [];
+let accounts = [];
+let editAccountID = null;
 
 /* ==========================
 DATA ACCOUNT
 ========================== */
-
-let accounts = [];
 
 async function saveAccount() {
 
@@ -259,50 +259,30 @@ async function saveUID(){
 
 async function saveAccount(){
 
-    const idff =
-    document.getElementById("accountID").value.trim();
+let data={
 
-    const uid =
-    document.getElementById("accountUID").value.trim();
+accountID: document.getElementById("accountID").value,
+accountUID: document.getElementById("accountUID").value,
+accountPassword: document.getElementById("accountPassword").value,
+accountStatus: document.getElementById("accountStatus").value
 
-    const password =
-    document.getElementById("accountPassword").value.trim();
+};
 
-    const status =
-    document.getElementById("accountStatus").value;
 
-    if(idff==="" || uid==="" || password===""){
+if(editAccountID){
 
-        alert("Lengkapi data");
+await accountCollection.doc(editAccountID).update(data);
 
-        return;
+editAccountID=null;
 
-    }
+}else{
 
-    try{
+await accountCollection.add(data);
 
-        await accountCollection.add({
+}
 
-            idff,
-            uid,
-            password,
-            status,
-            createdAt:
-            firebase.firestore.FieldValue.serverTimestamp()
 
-        });
-
-        showToast("Account berhasil ditambahkan");
-
-        closeAccountModal();
-
-    }catch(err){
-
-        console.error(err);
-
-        alert(err.message);
-
-    }
+closeAccountModal();
 
 }
 
@@ -603,37 +583,70 @@ async function saveEdit(){
 
 function renderAccount(){
 
-    let html = "";
+let html="";
 
-    accounts.forEach((item,index)=>{
+accounts.forEach((acc)=>{
 
-        html += `
+html += `
+<tr>
 
-        <tr>
+<td>${acc.accountID}</td>
 
-            <td>${item.idff}</td>
+<td>${acc.accountUID}</td>
 
-            <td>${item.uid}</td>
+<td>${acc.accountPassword}</td>
 
-            <td>${item.password}</td>
+<td>${acc.accountStatus}</td>
 
-            <td>${item.status}</td>
+<td>
 
-            <td>
+<button onclick="editAccount('${acc.id}')">
+Edit
+</button>
 
-                <button>Edit</button>
+<button onclick="deleteAccount('${acc.id}')">
+Hapus
+</button>
 
-                <button>Hapus</button>
+</td>
 
-            </td>
+</tr>
+`;
 
-        </tr>
+});
 
-        `;
 
-    });
+document.getElementById("accountTable").innerHTML = html;
 
-    accountTable.innerHTML = html;
+}
+
+async function deleteAccount(id){
+
+if(!confirm("Hapus akun ini?")) return;
+
+
+await accountCollection.doc(id).delete();
+
+
+alert("Akun berhasil dihapus");
+
+}
+
+function editAccount(id){
+
+let acc = accounts.find(a => a.id === id);
+
+
+document.getElementById("accountID").value = acc.accountID;
+document.getElementById("accountUID").value = acc.accountUID;
+document.getElementById("accountPassword").value = acc.accountPassword;
+document.getElementById("accountStatus").value = acc.accountStatus;
+
+
+editAccountID = id;
+
+
+openAccountModal();
 
 }
 
