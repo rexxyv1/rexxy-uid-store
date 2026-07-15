@@ -8,7 +8,6 @@ SCRIPT.JS
 // ===============================
 
 const uidCollection = db.collection("uids");
-alert("script jalan");
 
 async function simpanUIDFirebase(data) {
     try {
@@ -34,27 +33,7 @@ if(localStorage.getItem("admin") !== "true"){
 DATABASE
 ========================== */
 
-let uidData = JSON.parse(
-    localStorage.getItem("uidData")
-) || [
-
-{
-    uid:"16132444469",
-    harga:25000,
-    login:"Guest",
-    status:"Ready",
-    deskripsi:"UID Premium"
-},
-
-{
-    uid:"19222244444",
-    harga:30000,
-    login:"Google",
-    status:"Sold",
-    deskripsi:"UID Langka"
-}
-
-];
+let uidData = [];
 
 /* ==========================
 ELEMENT
@@ -74,19 +53,6 @@ document.getElementById("modal");
 
 const toast =
 document.getElementById("toast");
-
-/* ==========================
-SAVE DATABASE
-========================== */
-
-function saveDatabase(){
-
-    localStorage.setItem(
-        "uidData",
-        JSON.stringify(uidData)
-    );
-
-}
 
 /* ==========================
 TOAST
@@ -111,7 +77,6 @@ OPEN MODAL
 ========================== */
 
 function openModal(){
-    alert("OPEN MODAL DIPANGGIL");
     modal.style.display = "flex";
 }
 
@@ -210,19 +175,24 @@ async function saveUID(){
 DELETE UID
 ========================== */
 
-function deleteUID(index){
+async function deleteUID(index){
 
-    if(
-        !confirm("Hapus UID ini ?")
-    ) return;
+    if(!confirm("Hapus UID ini ?")) return;
 
-    uidData.splice(index,1);
+    try{
 
-    saveDatabase();
+        await db.collection("uids")
+        .doc(uidData[index].id)
+        .delete();
 
-    render();
+        showToast("UID berhasil dihapus");
 
-    showToast("UID berhasil dihapus");
+    }catch(err){
+
+        console.error(err);
+        alert(err.message);
+
+    }
 
 }
 
@@ -230,9 +200,9 @@ function deleteUID(index){
 EDIT UID
 ========================== */
 
-function editUID(index){
+async function editUID(index){
 
-    let item = uidData[index];
+    const item = uidData[index];
 
     const hargaBaru = prompt(
         "Harga Baru",
@@ -241,13 +211,24 @@ function editUID(index){
 
     if(hargaBaru===null) return;
 
-    item.harga = Number(hargaBaru);
+    try{
 
-    saveDatabase();
+        await db.collection("uids")
+        .doc(item.id)
+        .update({
 
-    render();
+            harga:Number(hargaBaru)
 
-    showToast("Data berhasil diupdate");
+        });
+
+        showToast("Data berhasil diupdate");
+
+    }catch(err){
+
+        console.error(err);
+        alert(err.message);
+
+    }
 
 }
 
