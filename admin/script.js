@@ -624,14 +624,29 @@ document.getElementById("accountTable").innerHTML = html;
 
 async function deleteAccount(id){
 
-deleteAccountID = id;
+    deleteAccountID = id;
 
-document.getElementById("deleteModal").style.display="flex";
+    document.getElementById("deleteModal").style.display="flex";
 
-};
+}
+
+async function confirmDelete(){
+
+    if(!deleteAccountID) return;
 
 
-alert("Akun berhasil dihapus");
+    await accountCollection
+    .doc(deleteAccountID)
+    .delete();
+
+
+    deleteAccountID = null;
+
+
+    closeDeleteModal();
+
+
+    alert("Akun berhasil dihapus");
 
 }
 
