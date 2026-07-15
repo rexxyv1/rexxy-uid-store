@@ -209,6 +209,12 @@ filterButtons.forEach(btn=>{
 
 });
 
+/* ==========================================
+DATABASE FIREBASE
+========================================== */
+
+let uidData = [];
+
 searchInput.addEventListener("input",renderTable);
 
 updateCounter();
