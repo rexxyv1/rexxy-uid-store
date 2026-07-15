@@ -1403,15 +1403,34 @@ color:white;
 }
 
 .modal-button{
+    display:flex;
+    justify-content:flex-end;
+    gap:12px;
+    margin-top:25px;
+}
 
-display:flex;
+.modal-button button{
+    border:none;
+    padding:12px 22px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:600;
+    transition:.3s;
+}
 
-justify-content:flex-end;
+.modal-button button:first-child{
+    background:#555;
+    color:#fff;
+}
 
-gap:10px;
+.modal-button button:last-child{
+    background:#8B5CF6;
+    color:#fff;
+}
 
-margin-top:25px;
-
+.modal-button button:hover{
+    transform:translateY(-2px);
+    opacity:.9;
 }
 
 .modal-button button{
