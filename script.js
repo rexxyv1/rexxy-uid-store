@@ -32,9 +32,9 @@ function renderTable() {
        String(item.harga).includes(keyword);
 
         const matchFilter =
-            currentFilter === "all"
-            ? true
-            : item.status === currentFilter;
+        currentFilter === "all"
+        ? true
+        : String(item.status).toLowerCase() === currentFilter.toLowerCase();
 
         return matchSearch && matchFilter;
 
@@ -53,14 +53,27 @@ function renderTable() {
 
     filteredData.forEach(item => {
 
-        const statusText =
-            item.status === "ready"
+        const isReady = String(item.status).toLowerCase() === "ready";
+
+        const statusText = isReady
             ? "🟢 Ready"
             : "🔴 Sold";
-
-        const orderButton =
-            item.status === "ready"
+        
+        const orderButton = isReady
             ? `
+                <button
+                    class="orderBtn"
+                    onclick="orderUID('${item.uid}','${item.harga}')">
+                    🛒 Order
+                </button>
+              `
+            : `
+                <button
+                    class="orderBtn disabled"
+                    disabled>
+                    ❌ Sold Out
+                </button>
+              `;
             <button
                 class="orderBtn"
                 onclick="orderUID('${item.uid}','${item.harga}')">
@@ -126,7 +139,7 @@ function renderTable() {
     <div class="info">
         <span class="label">📦 Status</span>
 
-        <span class="status ${item.status}">
+        <span class="status ${isReady ? "ready" : "sold"}">
             ${statusText}
         </span>
     </div>
