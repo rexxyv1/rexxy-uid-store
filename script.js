@@ -12,8 +12,8 @@ let currentFilter = "all";
 function updateCounter() {
     totalStock.textContent = uidData.length;
 
-    const ready = uidData.filter(item => item.status === "ready").length;
-    const sold = uidData.filter(item => item.status === "sold").length;
+    const ready = uidData.filter(item => item.status === "Ready").length;
+    const sold = uidData.filter(item => item.status === "Sold").length;
 
     readyStock.textContent = ready;
     soldStock.textContent = sold;
@@ -219,6 +219,7 @@ DATABASE FIREBASE
 
 let uidData = [];
 
+console.log("DB =", db);
 db.collection("uids")
 .orderBy("createdAt", "desc")
 .onSnapshot((snapshot) => {
