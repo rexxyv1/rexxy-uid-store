@@ -320,7 +320,7 @@ color:#9d95be;
    FILTER
 =========================== */
 
-.filter{
+/* filter{
 
 display:flex;
 
@@ -379,6 +379,53 @@ var(--primary2)
 box-shadow:
 
 0 8px 20px rgba(139,92,246,.35);
+
+} */
+
+.filter{
+    width:100%;
+    margin-top:15px;
+}
+
+#filterSelect{
+
+    width:100%;
+
+    padding:14px 18px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:#1d2330;
+
+    color:#fff;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    outline:none;
+
+    cursor:pointer;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    transition:.3s;
+
+}
+
+#filterSelect:hover{
+
+    border-color:#00d4ff;
+
+}
+
+#filterSelect:focus{
+
+    border-color:#00d4ff;
+
+    box-shadow:0 0 15px rgba(0,212,255,.3);
 
 }
 

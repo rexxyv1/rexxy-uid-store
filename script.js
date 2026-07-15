@@ -5,7 +5,7 @@ const totalStock = document.getElementById("totalStock");
 const readyStock = document.getElementById("readyStock");
 const soldStock = document.getElementById("soldStock");
 
-const filterButtons = document.querySelectorAll(".filterBtn");
+const filterSelect = document.getElementById("filterSelect");
 
 let currentFilter = "all";
 
@@ -31,10 +31,43 @@ function renderTable() {
        item.uid.toLowerCase().includes(keyword) ||
        String(item.harga).includes(keyword);
 
-        const matchFilter =
-        currentFilter === "all"
-        ? true
-        : String(item.status).toLowerCase() === currentFilter.toLowerCase();
+let matchFilter = false;
+
+switch(currentFilter){
+
+    case "all":
+        matchFilter = true;
+        break;
+
+    case "Ready":
+    case "Sold":
+        matchFilter = item.status === currentFilter;
+        break;
+
+    case "murah":
+        matchFilter = Number(item.harga) < 50000;
+        break;
+
+    case "mahal":
+        matchFilter = Number(item.harga) >= 50000;
+        break;
+
+    case "cantik":
+
+        // Pola angka cantik
+        matchFilter =
+            /(1234|4321|5678|8765|111222|222333|112233|223344|334455|445566|556677|667788|778899)/.test(item.uid);
+
+        break;
+
+    case "spam":
+
+        // Minimal 4 angka sama berurutan
+        matchFilter = /(.)\1{3,}/.test(item.uid);
+
+        break;
+
+}
 
         return matchSearch && matchFilter;
 
@@ -193,22 +226,6 @@ Apakah masih tersedia?`;
 
 }
 
-filterButtons.forEach(btn=>{
-
-    btn.addEventListener("click",()=>{
-
-        filterButtons.forEach(x=>x.classList.remove("active"));
-
-        btn.classList.add("active");
-
-        currentFilter = btn.dataset.filter;
-
-        renderTable();
-
-    });
-
-});
-
 /* ==========================================
 DATABASE FIREBASE
 ========================================== */
@@ -238,3 +255,11 @@ db.collection("uids")
 });
 
 searchInput.addEventListener("input", renderTable);
+
+filterSelect.addEventListener("change", () => {
+
+    currentFilter = filterSelect.value;
+
+    renderTable();
+
+});
