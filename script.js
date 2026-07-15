@@ -74,19 +74,6 @@ function renderTable() {
                     ❌ Sold Out
                 </button>
               `;
-            <button
-                class="orderBtn"
-                onclick="orderUID('${item.uid}','${item.harga}')">
-                🛒 Order
-            </button>
-            `
-            : `
-            <button
-                class="orderBtn disabled"
-                disabled>
-                ❌ Sold Out
-            </button>
-            `;
 
         const hargaHTML = item.promo
         ? `
