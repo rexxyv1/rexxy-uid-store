@@ -602,11 +602,11 @@ html += `
 
 <td>
 
-<button onclick="editAccount('${acc.id}')">
+<button type="button" onclick="editAccount('${acc.id}')">
 Edit
 </button>
 
-<button onclick="deleteAccount('${acc.id}')">
+<button type="button" onclick="deleteAccount('${acc.id}')">
 Hapus
 </button>
 
@@ -624,12 +624,19 @@ document.getElementById("accountTable").innerHTML = html;
 
 async function deleteAccount(id){
 
+    console.log("DELETE CLICK:", id);
+
     deleteAccountID = id;
 
-    document.getElementById("deleteModal").style.display="flex";
+    let modal = document.getElementById("deleteModal");
+
+    if(modal){
+        modal.style.display = "flex";
+    }else{
+        console.log("deleteModal tidak ditemukan");
+    }
 
 }
-
 async function confirmDelete(){
 
     if(!deleteAccountID) return;
