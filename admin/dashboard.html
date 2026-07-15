@@ -23,12 +23,12 @@
 
 <ul>
 
-<li class="active">
-🏠 Dashboard
+<li id="menuUID">
+📦 Data UID
 </li>
 
-<li>
-📦 Data UID
+<li id="menuAccounts">
+👤 Data Akun
 </li>
 
 <li>
@@ -156,6 +156,42 @@ Sold
 </thead>
 
 <tbody id="tbody">
+
+</tbody>
+
+</table>
+
+</div>
+
+<div id="accountPage" style="display:none;">
+
+<h1>Data Account</h1>
+
+<button onclick="openAccountModal()">
++ Tambah Account
+</button>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>ID FF</th>
+
+<th>UID</th>
+
+<th>Password</th>
+
+<th>Status</th>
+
+<th>Aksi</th>
+
+</tr>
+
+</thead>
+
+<tbody id="accountTable"></tbody>
 
 </tbody>
 
@@ -304,6 +340,48 @@ console.log("db =", typeof db);
         </div>
 
     </div>
+    </div> <!-- Penutup editModal -->
+
+<!-- ================= MENU ACCOUNT ================= -->
+<div id="accountModal" class="modal">
+
+<div class="modal-content">
+
+<h2>Tambah Account</h2>
+
+<input
+id="accountID"
+placeholder="ID FF">
+
+<input
+id="accountUID"
+placeholder="UID">
+
+<input
+id="accountPassword"
+placeholder="Password">
+
+<select id="accountStatus">
+
+<option>Ready</option>
+
+<option>Sold</option>
+
+</select>
+
+<div class="modalButton">
+
+<button onclick="closeAccountModal()">
+Batal
+</button>
+
+<button onclick="saveAccount()">
+Simpan
+</button>
+
+</div>
+
+</div>
 
 </div>
 

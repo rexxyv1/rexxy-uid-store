@@ -8,6 +8,7 @@ SCRIPT.JS
 // ===============================
 
 const uidCollection = db.collection("uids");
+const accountCollection = db.collection("accounts");
 
 async function simpanUIDFirebase(data) {
     try {
@@ -36,6 +37,47 @@ DATABASE
 let uidData = [];
 
 /* ==========================
+DATA ACCOUNT
+========================== */
+
+let accounts = [];
+
+async function saveAccount() {
+
+    const idff = document.getElementById("accountID").value.trim();
+    const uid = document.getElementById("accountUID").value.trim();
+    const password = document.getElementById("accountPassword").value.trim();
+    const status = document.getElementById("accountStatus").value;
+
+    if (!idff || !uid || !password) {
+        alert("Lengkapi data!");
+        return;
+    }
+
+    try {
+
+        await accountCollection.add({
+            idff,
+            uid,
+            password,
+            status,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        alert("Account berhasil disimpan");
+
+        closeAccountModal();
+
+    } catch (err) {
+
+        console.error(err);
+        alert(err.message);
+
+    }
+
+}
+
+/* ==========================
 ELEMENT
 ========================== */
 
@@ -51,24 +93,14 @@ document.getElementById("filter");
 const modal =
 document.getElementById("modal");
 
-function openEditModal(index){
+const accountModal =
+document.getElementById("accountModal");
 
-    const item = uidData[index];
+const accountTable =
+document.getElementById("accountTable");
 
-    currentDoc = item.id;
-
-    document.getElementById("editUID").value = item.uid;
-    document.getElementById("editHarga").value = item.harga;
-    document.getElementById("editLogin").value = item.login;
-    document.getElementById("editStatus").value = item.status;
-
-    document.getElementById("editModal").style.display = "flex";
-}
-
-function closeEditModal(){
-
-    document.getElementById("editModal").style.display = "none";
-}
+const editModal =
+document.getElementById("editModal");
 
 const toast =
 document.getElementById("toast");
@@ -106,6 +138,22 @@ CLOSE MODAL
 function closeModal(){
 
     modal.style.display="none";
+
+}
+
+/* ==========================
+MANAGE ACCOUNT
+========================== */
+
+function openAccountModal(){
+
+    accountModal.style.display = "flex";
+
+}
+
+function closeAccountModal(){
+
+    accountModal.style.display = "none";
 
 }
 
@@ -179,6 +227,55 @@ async function saveUID(){
         document.getElementById("harga").value="";
         document.getElementById("deskripsi").value="";
         document.getElementById("preview").style.display="none";
+
+    }catch(err){
+
+        console.error(err);
+
+        alert(err.message);
+
+    }
+
+}
+
+async function saveAccount(){
+
+    const idff =
+    document.getElementById("accountID").value.trim();
+
+    const uid =
+    document.getElementById("accountUID").value.trim();
+
+    const password =
+    document.getElementById("accountPassword").value.trim();
+
+    const status =
+    document.getElementById("accountStatus").value;
+
+    if(idff==="" || uid==="" || password===""){
+
+        alert("Lengkapi data");
+
+        return;
+
+    }
+
+    try{
+
+        await accountCollection.add({
+
+            idff,
+            uid,
+            password,
+            status,
+            createdAt:
+            firebase.firestore.FieldValue.serverTimestamp()
+
+        });
+
+        showToast("Account berhasil ditambahkan");
+
+        closeAccountModal();
 
     }catch(err){
 
@@ -485,12 +582,67 @@ async function saveEdit(){
 
 }
 
+function renderAccount(){
+
+    let html = "";
+
+    accounts.forEach((item,index)=>{
+
+        html += `
+
+        <tr>
+
+            <td>${item.idff}</td>
+
+            <td>${item.uid}</td>
+
+            <td>${item.password}</td>
+
+            <td>${item.status}</td>
+
+            <td>
+
+                <button>Edit</button>
+
+                <button>Hapus</button>
+
+            </td>
+
+        </tr>
+
+        `;
+
+    });
+
+    accountTable.innerHTML = html;
+
+}
 
 /* ==========================
 INIT
 ========================== */
 
 db.collection("uids")
+
+accountCollection.onSnapshot((snapshot)=>{
+
+    accounts = [];
+
+    snapshot.forEach((doc)=>{
+
+        accounts.push({
+
+            id: doc.id,
+
+            ...doc.data()
+
+        });
+
+    });
+
+    renderAccount();
+
+});
 
 .onSnapshot((snapshot)=>{
 
