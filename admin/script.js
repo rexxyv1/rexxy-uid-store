@@ -51,8 +51,24 @@ document.getElementById("filter");
 const modal =
 document.getElementById("modal");
 
-const editModal =
-document.getElementById("editModal");
+function openEditModal(index){
+
+    const item = uidData[index];
+
+    currentDoc = item.id;
+
+    document.getElementById("editUID").value = item.uid;
+    document.getElementById("editHarga").value = item.harga;
+    document.getElementById("editLogin").value = item.login;
+    document.getElementById("editStatus").value = item.status;
+
+    document.getElementById("editModal").style.display = "flex";
+}
+
+function closeEditModal(){
+
+    document.getElementById("editModal").style.display = "none";
+}
 
 const toast =
 document.getElementById("toast");
