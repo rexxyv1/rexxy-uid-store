@@ -16,3 +16,28 @@ firebase.initializeApp(firebaseConfig);
 
 // Firestore
 window.db = firebase.firestore();
+
+async function saveEdit(){
+
+const harga=
+Number(document.getElementById("editHarga").value);
+
+const login=
+document.getElementById("editLogin").value;
+
+const status=
+document.getElementById("editStatus").value;
+
+await db.collection("uids")
+.doc(currentDoc)
+.update({
+
+harga,
+login,
+status
+
+});
+
+closeModal();
+
+}
