@@ -106,35 +106,17 @@ placeholder="Cari UID atau Harga..."
 </div>
 
 <div class="filter">
+<select id="filterSelect">
 
-    <button class="filterBtn active" data-filter="all">
-        📦 ALL
-    </button>
+<option value="all">📦 ALL</option>
+<option value="Ready">🟢 READY</option>
+<option value="Sold">🔴 SOLD</option>
+<option value="murah">💰 MURAH</option>
+<option value="mahal">💎 MAHAL</option>
+<option value="cantik">✨ CANTIK</option>
+<option value="spam">🔥 SPAM</option>
 
-    <button class="filterBtn" data-filter="Ready">
-        🟢 READY
-    </button>
-
-    <button class="filterBtn" data-filter="Sold">
-        🔴 SOLD
-    </button>
-
-    <button class="filterBtn" data-filter="murah">
-        💰 MURAH
-    </button>
-
-    <button class="filterBtn" data-filter="mahal">
-        💎 MAHAL
-    </button>
-
-    <button class="filterBtn" data-filter="cantik">
-        ✨ CANTIK
-    </button>
-
-    <button class="filterBtn" data-filter="spam">
-        🔥 SPAM
-    </button>
-
+</select>
 </div>
 
 </section>
