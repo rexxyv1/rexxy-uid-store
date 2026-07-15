@@ -157,6 +157,25 @@ function closeAccountModal(){
 
 }
 
+/* ==========================
+MENU PAGE
+========================== */
+
+function openHomePage(){
+
+    document.getElementById("accountPage").style.display="none";
+    document.getElementById("homePage").style.display="block";
+
+}
+
+
+function openAccountPage(){
+
+    document.getElementById("homePage").style.display="none";
+    document.getElementById("accountPage").style.display="block";
+
+}
+
 function previewImage(event){
 
 const file=event.target.files[0];
