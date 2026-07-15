@@ -51,6 +51,9 @@ document.getElementById("filter");
 const modal =
 document.getElementById("modal");
 
+const editModal =
+document.getElementById("editModal");
+
 const toast =
 document.getElementById("toast");
 
@@ -422,12 +425,48 @@ function openEditModal(index){
     document.getElementById("editLogin").value = item.login;
     document.getElementById("editStatus").value = item.status;
 
-    document.getElementById("editModal").style.display = "flex";
+    editModal.style.display = "flex";
 }
 
 function closeEditModal(){
 
-    document.getElementById("editModal").style.display = "none";
+    editModal.style.display = "none";
+}
+
+async function saveEdit(){
+
+    const harga = Number(document.getElementById("editHarga").value);
+
+    const login = document.getElementById("editLogin").value;
+
+    const status = document.getElementById("editStatus").value;
+
+    try{
+
+        await db.collection("uids")
+        .doc(currentDoc)
+        .update({
+            harga,
+            login,
+            status
+        });
+        
+        console.log("UPDATE BERHASIL");
+        
+        editModal.style.display = "none";
+        
+        showToast("✅ Data berhasil diupdate");
+
+        closeEditModal();
+
+    }catch(err){
+
+        console.error(err);
+
+        alert(err.message);
+
+    }
+
 }
 
 
