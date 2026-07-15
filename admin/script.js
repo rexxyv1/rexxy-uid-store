@@ -37,6 +37,8 @@ DATABASE
 let uidData = [];
 let accounts = [];
 let editAccountID = null;
+let deleteAccountID = null;
+
 
 /* ==========================
 DATA ACCOUNT
@@ -622,10 +624,11 @@ document.getElementById("accountTable").innerHTML = html;
 
 async function deleteAccount(id){
 
-if(!confirm("Hapus akun ini?")) return;
+deleteAccountID = id;
 
+document.getElementById("deleteModal").style.display="flex";
 
-await accountCollection.doc(id).delete();
+};
 
 
 alert("Akun berhasil dihapus");
