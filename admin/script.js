@@ -623,6 +623,25 @@ INIT
 ========================== */
 
 db.collection("uids")
+.onSnapshot((snapshot)=>{
+
+    uidData=[];
+
+    snapshot.forEach((doc)=>{
+
+        uidData.push({
+
+            id:doc.id,
+
+            ...doc.data()
+
+        });
+
+    });
+
+    render();
+
+});
 
 accountCollection.onSnapshot((snapshot)=>{
 
@@ -641,26 +660,6 @@ accountCollection.onSnapshot((snapshot)=>{
     });
 
     renderAccount();
-
-});
-
-.onSnapshot((snapshot)=>{
-
-    uidData=[];
-
-    snapshot.forEach((doc)=>{
-
-        uidData.push({
-
-            id:doc.id,
-
-            ...doc.data()
-
-        });
-
-    });
-
-    render();
 
 });
 
