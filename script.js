@@ -1,666 +1,265 @@
-/* ==========================================
-REXXY ADMIN PANEL
-SCRIPT.JS
-========================================== */
+const tableBody = document.getElementById("uidTable");
+const searchInput = document.getElementById("searchInput");
 
-// ===============================
-// FIREBASE FIRESTORE
-// ===============================
+const totalStock = document.getElementById("totalStock");
+const readyStock = document.getElementById("readyStock");
+const soldStock = document.getElementById("soldStock");
 
-const uidCollection = db.collection("uids");
-const accountCollection = db.collection("accounts");
+const filterSelect = document.getElementById("filterSelect");
 
-async function simpanUIDFirebase(data) {
+let currentFilter = "all";
+
+function updateCounter() {
+    totalStock.textContent = uidData.length;
+
+    const ready = uidData.filter(item => item.status === "Ready").length;
+    const sold = uidData.filter(item => item.status === "Sold").length;
+
+    readyStock.textContent = ready;
+    soldStock.textContent = sold;
+}
+
+function renderTable() {
+
+    const keyword = searchInput.value.toLowerCase().trim();
+
+    tableBody.innerHTML = "";
+
+    const filteredData = uidData.filter(item => {
+
+        const matchSearch =
+       item.uid.toLowerCase().includes(keyword) ||
+       String(item.harga).includes(keyword);
+
+let matchFilter = false;
+
+switch(currentFilter){
+
+    case "all":
+        matchFilter = true;
+        break;
+
+    case "Ready":
+    case "Sold":
+        matchFilter = item.status === currentFilter;
+        break;
+
+    case "murah":
+        matchFilter = Number(item.harga) < 50000;
+        break;
+
+    case "mahal":
+        matchFilter = Number(item.harga) >= 50000;
+        break;
+
+    case "cantik":
+
+        // Pola angka cantik
+        matchFilter =
+            /(1234|4321|5678|8765|111222|222333|112233|223344|334455|445566|556677|667788|778899)/.test(item.uid);
+
+        break;
+
+    case "spam":
+
+        // Minimal 4 angka sama berurutan
+        matchFilter = /(.)\1{3,}/.test(item.uid);
+
+        break;
+
+}
+
+        return matchSearch && matchFilter;
+
+    });
+
+    if(filteredData.length === 0){
+
+    tableBody.innerHTML = `
+    <div class="empty">
+    🔍 Tidak ada UID yang cocok.
+    </div>
+    `;
+
+        return;
+    }
+
+    filteredData.forEach(item => {
+
+        const isReady = String(item.status).toLowerCase() === "ready";
+
+        const statusText = isReady
+            ? "🟢 Ready"
+            : "🔴 Sold";
+        
+        const orderButton = isReady
+            ? `
+                <button
+                    class="orderBtn"
+                    onclick="orderUID('${item.uid}','${item.harga}')">
+                    🛒 Order
+                </button>
+              `
+            : `
+                <button
+                    class="orderBtn disabled"
+                    disabled>
+                    ❌ Sold Out
+                </button>
+              `;
+
+        const hargaHTML = item.promo
+        ? `
+        <div class="old-price">
+        ${new Intl.NumberFormat("id-ID",{
+            style:"currency",
+            currency:"IDR",
+            minimumFractionDigits:0
+        }).format(item.hargaAsli)}
+        </div>
+        
+        <div class="price">
+        ${new Intl.NumberFormat("id-ID",{
+            style:"currency",
+            currency:"IDR",
+            minimumFractionDigits:0
+        }).format(item.harga)}
+        </div>
+        `
+        : `
+        <div class="price">
+        ${new Intl.NumberFormat("id-ID",{
+            style:"currency",
+            currency:"IDR",
+            minimumFractionDigits:0
+        }).format(item.harga)}
+        </div>
+        `;
+
+        tableBody.innerHTML += `
+<div class="uid-card">
+
+    ${item.promo ? `<span class="promo-badge">🔥 PROMO</span>` : ""}
+
+    <div class="info">
+        <span class="label">🆔 UID</span>
+        <h3>${item.uid}</h3>
+    </div>
+
+    <div class="info">
+        <span class="label">💰 Harga</span>
+        ${hargaHTML}
+    </div>
+
+    <div class="info">
+        <span class="label">🔑 Login</span>
+        <h4 class="login-type">${item.login}</h4>
+    </div>
+
+    <div class="info">
+        <span class="label">📦 Status</span>
+
+        <span class="status ${isReady ? "ready" : "sold"}">
+            ${statusText}
+        </span>
+    </div>
+
+    <div class="button-group">
+
+        <button
+            class="copyBtn"
+            onclick="copyUID('${item.uid}')">
+
+            📋 COPY
+
+        </button>
+
+        ${orderButton}
+
+    </div>
+
+</div>
+`;
+
+    });
+
+}
+
+function showToast(message) {
+    const toast = document.createElement("div");
+    toast.className = "toast";
+    toast.textContent = message;
+
+    document.body.appendChild(toast);
+
+    setTimeout(() => toast.classList.add("show"), 50);
+
+    setTimeout(() => {
+        toast.classList.remove("show");
+        setTimeout(() => toast.remove(), 300);
+    }, 2000);
+}
+
+async function copyUID(uid) {
     try {
-        await uidCollection.add(data);
-        alert("✅ UID berhasil disimpan ke Firebase");
+        await navigator.clipboard.writeText(uid);
+        showToast("✅ UID berhasil disalin");
     } catch (err) {
-        console.error(err);
-        alert("❌ Gagal menyimpan UID");
+        showToast("❌ Gagal menyalin UID");
     }
 }
 
-/* ==========================
-LOGIN CHECK
-========================== */
+function orderUID(uid,harga){
 
-if(localStorage.getItem("admin") !== "true"){
+    const text =
+`Halo Admin, saya ingin membeli UID berikut.
 
-    location.href="login.html";
+UID : ${uid}
+Harga : ${harga}
+
+Apakah masih tersedia?`;
+
+    const url =
+`https://wa.me/6285167335472?text=${encodeURIComponent(text)}`;
+
+    window.open(url,"_blank");
 
 }
 
-/* ==========================
-DATABASE
-========================== */
+/* ==========================================
+DATABASE FIREBASE
+========================================== */
+
+/* ==========================================
+DATABASE FIREBASE
+========================================== */
 
 let uidData = [];
 
-/* ==========================
-DATA ACCOUNT
-========================== */
-
-let accounts = [];
-
-async function saveAccount() {
-
-    const idff = document.getElementById("accountID").value.trim();
-    const uid = document.getElementById("accountUID").value.trim();
-    const password = document.getElementById("accountPassword").value.trim();
-    const status = document.getElementById("accountStatus").value;
-
-    if (!idff || !uid || !password) {
-        alert("Lengkapi data!");
-        return;
-    }
-
-    try {
-
-        await accountCollection.add({
-            idff,
-            uid,
-            password,
-            status,
-            createdAt: firebase.firestore.FieldValue.serverTimestamp()
-        });
-
-        alert("Account berhasil disimpan");
-
-        closeAccountModal();
-
-    } catch (err) {
-
-        console.error(err);
-        alert(err.message);
-
-    }
-
-}
-
-/* ==========================
-ELEMENT
-========================== */
-
-const tbody =
-document.getElementById("tbody");
-
-const search =
-document.getElementById("search");
-
-const filter =
-document.getElementById("filter");
-
-const modal =
-document.getElementById("modal");
-
-const accountModal =
-document.getElementById("accountModal");
-
-const accountTable =
-document.getElementById("accountTable");
-
-const editModal =
-document.getElementById("editModal");
-
-const toast =
-document.getElementById("toast");
-
-/* ==========================
-TOAST
-========================== */
-
-function showToast(text){
-
-    toast.innerHTML=text;
-
-    toast.classList.add("show");
-
-    setTimeout(()=>{
-
-        toast.classList.remove("show");
-
-    },2500);
-
-}
-
-/* ==========================
-OPEN MODAL
-========================== */
-
-function openModal(){
-    modal.style.display = "flex";
-}
-
-/* ==========================
-CLOSE MODAL
-========================== */
-
-function closeModal(){
-
-    modal.style.display="none";
-
-}
-
-/* ==========================
-MANAGE ACCOUNT
-========================== */
-
-function openAccountModal(){
-
-    accountModal.style.display = "flex";
-
-}
-
-function closeAccountModal(){
-
-    accountModal.style.display = "none";
-
-}
-
-function previewImage(event){
-
-const file=event.target.files[0];
-
-if(!file)return;
-
-const reader=new FileReader();
-
-reader.onload=function(e){
-
-document.getElementById("preview").src=e.target.result;
-
-document.getElementById("preview").style.display="block";
-
-}
-
-reader.readAsDataURL(file);
-
-}
-
-/* ==========================
-SAVE UID
-========================== */
-
-async function saveUID(){
-
-    const uid = document.getElementById("uid").value.trim();
-
-    const harga = Number(document.getElementById("harga").value);
-
-    const login = document.getElementById("login").value;
-
-    const status = document.getElementById("status").value;
-
-    const deskripsi = document.getElementById("deskripsi").value;
-
-    const gambar = document.getElementById("preview").src || "";
-
-    if(uid==="" || !harga){
-
-        alert("Lengkapi data");
-
-        return;
-
-    }
-
-    const data={
-
-        uid,
-        harga,
-        login,
-        status,
-        deskripsi,
-        gambar,
-        createdAt:firebase.firestore.FieldValue.serverTimestamp()
-
-    };
-
-    try{
-
-        await db.collection("uids").add(data);
-
-        showToast("UID berhasil ditambahkan");
-
-        closeModal();
-
-        document.getElementById("uid").value="";
-        document.getElementById("harga").value="";
-        document.getElementById("deskripsi").value="";
-        document.getElementById("preview").style.display="none";
-
-    }catch(err){
-
-        console.error(err);
-
-        alert(err.message);
-
-    }
-
-}
-
-async function saveAccount(){
-
-    const idff =
-    document.getElementById("accountID").value.trim();
-
-    const uid =
-    document.getElementById("accountUID").value.trim();
-
-    const password =
-    document.getElementById("accountPassword").value.trim();
-
-    const status =
-    document.getElementById("accountStatus").value;
-
-    if(idff==="" || uid==="" || password===""){
-
-        alert("Lengkapi data");
-
-        return;
-
-    }
-
-    try{
-
-        await accountCollection.add({
-
-            idff,
-            uid,
-            password,
-            status,
-            createdAt:
-            firebase.firestore.FieldValue.serverTimestamp()
-
-        });
-
-        showToast("Account berhasil ditambahkan");
-
-        closeAccountModal();
-
-    }catch(err){
-
-        console.error(err);
-
-        alert(err.message);
-
-    }
-
-}
-
-/* ==========================
-DELETE UID
-========================== */
-
-async function deleteUID(index){
-
-    if(!confirm("Hapus UID ini ?")) return;
-
-    try{
-
-        await db.collection("uids")
-        .doc(uidData[index].id)
-        .delete();
-
-        showToast("UID berhasil dihapus");
-
-    }catch(err){
-
-        console.error(err);
-        alert(err.message);
-
-    }
-
-}
-
-/* ==========================
-EDIT UID
-========================== */
-
-async function editUID(index){
-
-    const item = uidData[index];
-
-    const hargaBaru = prompt(
-        "Harga Baru",
-        item.harga
-    );
-
-    if(hargaBaru===null) return;
-
-    try{
-
-        await db.collection("uids")
-        .doc(item.id)
-        .update({
-
-            harga:Number(hargaBaru)
-
-        });
-
-        showToast("Data berhasil diupdate");
-
-    }catch(err){
-
-        console.error(err);
-        alert(err.message);
-
-    }
-
-}
-
-/* ==========================
-STATISTIC
-========================== */
-
-function updateStatistic(){
-
-    let total =
-    uidData.length;
-
-    let ready =
-    uidData.filter(
-        x=>x.status==="Ready"
-    ).length;
-
-    let sold =
-    uidData.filter(
-        x=>x.status==="Sold"
-    ).length;
-
-    let income =
-    uidData
-    .filter(
-        x=>x.status==="Sold"
-    )
-    .reduce(
-        (a,b)=>a+b.harga,
-        0
-    );
-
-    document.getElementById(
-        "totalUID"
-    ).innerHTML=total;
-
-    document.getElementById(
-        "readyUID"
-    ).innerHTML=ready;
-
-    document.getElementById(
-        "soldUID"
-    ).innerHTML=sold;
-
-    document.getElementById(
-        "income"
-    ).innerHTML=
-    "Rp" +
-    income.toLocaleString(
-        "id-ID"
-    );
-
-}
-
-/* ==========================
-RENDER TABLE
-========================== */
-
-function render(){
-
-    let keyword =
-    search.value.toLowerCase();
-
-    let statusFilter =
-    filter.value;
-
-    let html="";
-
-    uidData
-    .filter(item=>{
-
-        let cocokUID =
-        item.uid
-        .toLowerCase()
-        .includes(keyword);
-
-        let cocokStatus =
-        statusFilter==="all"
-        ||
-        item.status===statusFilter;
-
-        return cocokUID
-        &&
-        cocokStatus;
-
-    })
-
-    .forEach((item,index)=>{
-
-        html += `
-
-        <tr>
-
-            <td>${item.uid}</td>
-
-            <td>
-            Rp${item.harga.toLocaleString("id-ID")}
-            </td>
-
-            <td>${item.login}</td>
-
-            <td>
-
-                <span class="status ${item.status.toLowerCase()}">
-
-                ${item.status}
-
-                </span>
-
-            </td>
-
-            <td>
-
-                <div class="action">
-
-                    <button
-                    class="editBtn"
-                    onclick="openEditModal(${index})">
-                    
-                    Edit
-                    
-                    </button>
-
-                    <button
-                    class="deleteBtn"
-                    onclick="deleteUID(${index})">
-
-                    Hapus
-
-                    </button>
-
-                </div>
-
-            </td>
-
-        </tr>
-
-        `;
-
-    });
-
-    tbody.innerHTML=html;
-
-    updateStatistic();
-
-}
-
-/* ==========================
-LOGOUT
-========================== */
-
-function logout(){
-
-    localStorage.removeItem(
-        "admin"
-    );
-
-    location.href=
-    "login.html";
-
-}
-
-/* ==========================
-AUTO CLOSE MODAL
-========================== */
-
-window.onclick=function(e){
-
-    if(e.target===modal){
-
-        closeModal();
-
-    }
-
-}
-
-/* ==========================
-EDIT STOK ADMIN PANEL
-========================== */
-
-let currentDoc = "";
-
-function openEditModal(index){
-
-    const item = uidData[index];
-
-    currentDoc = item.id;
-
-    document.getElementById("editUID").value = item.uid;
-    document.getElementById("editHarga").value = item.harga;
-    document.getElementById("editLogin").value = item.login;
-    document.getElementById("editStatus").value = item.status;
-
-    editModal.style.display = "flex";
-}
-
-function closeEditModal(){
-
-    editModal.style.display = "none";
-}
-
-async function saveEdit(){
-
-    const harga = Number(document.getElementById("editHarga").value);
-
-    const login = document.getElementById("editLogin").value;
-
-    const status = document.getElementById("editStatus").value;
-
-    try{
-
-        await db.collection("uids")
-        .doc(currentDoc)
-        .update({
-            harga,
-            login,
-            status
-        });
-        
-        console.log("UPDATE BERHASIL");
-        
-        editModal.style.display = "none";
-        
-        showToast("✅ Data berhasil diupdate");
-
-        closeEditModal();
-
-    }catch(err){
-
-        console.error(err);
-
-        alert(err.message);
-
-    }
-
-}
-
-function renderAccount(){
-
-    let html = "";
-
-    accounts.forEach((item,index)=>{
-
-        html += `
-
-        <tr>
-
-            <td>${item.idff}</td>
-
-            <td>${item.uid}</td>
-
-            <td>${item.password}</td>
-
-            <td>${item.status}</td>
-
-            <td>
-
-                <button>Edit</button>
-
-                <button>Hapus</button>
-
-            </td>
-
-        </tr>
-
-        `;
-
-    });
-
-    accountTable.innerHTML = html;
-
-}
-
-/* ==========================
-INIT
-========================== */
-
+console.log("DB =", db);
 db.collection("uids")
-.onSnapshot((snapshot)=>{
+.orderBy("createdAt", "desc")
+.onSnapshot((snapshot) => {
 
-    uidData=[];
+    uidData = [];
 
-    snapshot.forEach((doc)=>{
+    snapshot.forEach((doc) => {
 
-        uidData.push({
-
-            id:doc.id,
-
-            ...doc.data()
-
-        });
+        uidData.push(doc.data());
 
     });
 
-    render();
+    updateCounter();
+    renderTable();
 
 });
 
-accountCollection.onSnapshot((snapshot)=>{
+searchInput.addEventListener("input", renderTable);
 
-    accounts = [];
+filterSelect.addEventListener("change", () => {
 
-    snapshot.forEach((doc)=>{
+    currentFilter = filterSelect.value;
 
-        accounts.push({
-
-            id: doc.id,
-
-            ...doc.data()
-
-        });
-
-    });
-
-    renderAccount();
+    renderTable();
 
 });
-
-render();
