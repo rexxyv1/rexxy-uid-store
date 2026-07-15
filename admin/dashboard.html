@@ -23,11 +23,11 @@
 
 <ul>
 
-<li id="menuUID">
+<li id="menuUID" onclick="openHomePage()">
 📦 Data UID
 </li>
 
-<li id="menuAccounts">
+<li id="menuAccounts" onclick="openAccountPage()">
 👤 Data Akun
 </li>
 
@@ -48,6 +48,7 @@
 </div>
 
 <div class="main">
+<div id="homePage">
 
 <header>
 
@@ -163,6 +164,8 @@ Sold
 
 </div>
 
+</div>
+
 <div id="accountPage" style="display:none;">
 
 <h1>Data Account</h1>
@@ -192,8 +195,6 @@ Sold
 </thead>
 
 <tbody id="accountTable"></tbody>
-
-</tbody>
 
 </table>
 
