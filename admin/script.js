@@ -622,19 +622,15 @@ document.getElementById("accountTable").innerHTML = html;
 
 }
 
-async function deleteAccount(id){
+function deleteAccount(id){
 
-    console.log("DELETE CLICK:", id);
+    console.log("klik hapus", id);
 
     deleteAccountID = id;
 
-    let modal = document.getElementById("deleteModal");
+    const modal = document.getElementById("deleteModal");
 
-    if(modal){
-        modal.style.display = "flex";
-    }else{
-        console.log("deleteModal tidak ditemukan");
-    }
+    modal.style.display = "flex";
 
 }
 async function confirmDelete(){
