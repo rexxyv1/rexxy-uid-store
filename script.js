@@ -213,10 +213,27 @@ filterButtons.forEach(btn=>{
 DATABASE FIREBASE
 ========================================== */
 
+/* ==========================================
+DATABASE FIREBASE
+========================================== */
+
 let uidData = [];
 
-searchInput.addEventListener("input",renderTable);
+db.collection("uids")
+.orderBy("createdAt", "desc")
+.onSnapshot((snapshot) => {
 
-updateCounter();
-renderTable();
+    uidData = [];
 
+    snapshot.forEach((doc) => {
+
+        uidData.push(doc.data());
+
+    });
+
+    updateCounter();
+    renderTable();
+
+});
+
+searchInput.addEventListener("input", renderTable);
