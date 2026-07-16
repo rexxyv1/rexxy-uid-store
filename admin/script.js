@@ -149,15 +149,11 @@ MANAGE ACCOUNT
 
 function openAccountModal(){
 
+    editAccountID = null;
+
     document.getElementById("accountModalTitle").innerText = "Tambah Account";
 
     accountModal.style.display = "flex";
-
-}
-
-function closeAccountModal(){
-
-    accountModal.style.display = "none";
 
 }
 
@@ -757,11 +753,9 @@ function editAccount(id){
 
     editAccountID = id;
 
-
     document.getElementById("accountModalTitle").innerText = "Edit Account";
 
-
-    openAccountModal();
+    accountModal.style.display = "flex";
 
 }
 
