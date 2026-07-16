@@ -631,6 +631,13 @@ function deleteAccount(id){
     document.getElementById("deleteModal").style.display="flex";
 
 }
+
+function closeDeleteModal(){
+
+    document.getElementById("deleteModal").style.display="none";
+
+}
+
 async function confirmDelete(){
 
     console.log("CONFIRM DIKLIK");
