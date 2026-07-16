@@ -134,16 +134,6 @@ function openModal(){
 }
 
 /* ==========================
-CLOSE MODAL
-========================== */
-
-function closeModal(){
-
-    modal.style.display="none";
-
-}
-
-/* ==========================
 MANAGE ACCOUNT
 ========================== */
 
@@ -153,7 +143,14 @@ function openAccountModal(){
 
     document.getElementById("accountModalTitle").innerText = "Tambah Account";
 
-    accountModal.style.display = "flex";
+    document.getElementById("accountModal").style.display = "flex";
+
+}
+
+
+function closeAccountModal(){
+
+    document.getElementById("accountModal").style.display = "none";
 
 }
 
