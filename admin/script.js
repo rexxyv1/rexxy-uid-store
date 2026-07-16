@@ -621,6 +621,73 @@ Hapus
 
 });
 
+function searchAccount(){
+
+    let keyword = document
+    .getElementById("searchAccount")
+    .value
+    .toLowerCase();
+
+
+    let filtered = accounts.filter(acc => {
+
+        return (
+            String(acc.accountID)
+            .toLowerCase()
+            .includes(keyword)
+
+            ||
+
+            String(acc.accountUID)
+            .toLowerCase()
+            .includes(keyword)
+        );
+
+    });
+
+
+    let html="";
+
+
+    filtered.forEach((acc)=>{
+
+        html += `
+        <tr>
+
+        <td>${acc.accountID}</td>
+
+        <td>${acc.accountUID}</td>
+
+        <td>${acc.accountPassword}</td>
+
+        <td>
+        <span class="${acc.accountStatus === 'Ready' ? 'status-ready' : 'status-sold'}">
+        ${acc.accountStatus}
+        </span>
+        </td>
+
+        <td>
+
+        <button type="button" onclick="editAccount('${acc.id}')">
+        Edit
+        </button>
+
+        <button type="button" onclick="deleteAccount('${acc.id}')">
+        Hapus
+        </button>
+
+        </td>
+
+        </tr>
+        `;
+
+    });
+
+
+    document.getElementById("accountTable").innerHTML = html;
+
+}
+
 
 document.getElementById("accountTable").innerHTML = html;
 
