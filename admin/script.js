@@ -149,6 +149,8 @@ MANAGE ACCOUNT
 
 function openAccountModal(){
 
+    document.getElementById("accountModalTitle").innerText = "Tambah Account";
+
     accountModal.style.display = "flex";
 
 }
@@ -746,19 +748,20 @@ async function confirmDelete(){
 
 function editAccount(id){
 
-let acc = accounts.find(a => a.id === id);
+    let acc = accounts.find(a => a.id === id);
+
+    document.getElementById("accountID").value = acc.accountID;
+    document.getElementById("accountUID").value = acc.accountUID;
+    document.getElementById("accountPassword").value = acc.accountPassword;
+    document.getElementById("accountStatus").value = acc.accountStatus;
+
+    editAccountID = id;
 
 
-document.getElementById("accountID").value = acc.accountID;
-document.getElementById("accountUID").value = acc.accountUID;
-document.getElementById("accountPassword").value = acc.accountPassword;
-document.getElementById("accountStatus").value = acc.accountStatus;
+    document.getElementById("accountModalTitle").innerText = "Edit Account";
 
 
-editAccountID = id;
-
-
-openAccountModal();
+    openAccountModal();
 
 }
 
