@@ -624,36 +624,43 @@ document.getElementById("accountTable").innerHTML = html;
 
 function deleteAccount(id){
 
-    console.log("klik hapus", id);
+    console.log("DELETE ID:", id);
 
     deleteAccountID = id;
 
-    const modal = document.getElementById("deleteModal");
-
-    console.log("modal:", modal);
-
-    modal.style.display = "flex";
+    document.getElementById("deleteModal").style.display="flex";
 
 }
 async function confirmDelete(){
 
-    console.log("CONFIRM HAPUS", deleteAccountID);
+    console.log("CONFIRM DIKLIK");
+    console.log("ID:", deleteAccountID);
 
-    if(!deleteAccountID) return;
+
+    if(!deleteAccountID){
+        console.log("ID KOSONG");
+        return;
+    }
+
 
     try{
 
-        await accountCollection.doc(deleteAccountID).delete();
+        await accountCollection
+        .doc(deleteAccountID)
+        .delete();
+
 
         console.log("BERHASIL HAPUS");
+
 
         deleteAccountID = null;
 
         closeDeleteModal();
 
+
     }catch(e){
 
-        console.log("ERROR HAPUS:", e);
+        console.log("ERROR:", e);
 
     }
 
