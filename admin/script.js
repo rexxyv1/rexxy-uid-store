@@ -598,7 +598,11 @@ html += `
 
 <td>${acc.accountPassword}</td>
 
-<td>${acc.accountStatus}</td>
+<td>
+    <span class="${acc.accountStatus === 'Ready' ? 'status-ready' : 'status-sold'}">
+        ${acc.accountStatus}
+    </span>
+</td>
 
 <td>
 

@@ -878,8 +878,17 @@ ACCOUNT TABLE STYLE
 }
 
 
-/* Status */
+/* ==========================
+STATUS ACCOUNT COLOR
+========================== */
 
-#accountTable td:nth-child(4){
-    font-weight:bold;
+.status-ready {
+    color: #00e5ff;
+    font-weight: 700;
+}
+
+
+.status-sold {
+    color: #ff4757;
+    font-weight: 700;
 }
