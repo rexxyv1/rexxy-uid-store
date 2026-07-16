@@ -171,10 +171,14 @@ Sold
 <h1>Data Account</h1>
 
 <input 
-type="text" 
-id="searchAccount" 
-placeholder="Cari ID FF / UID..."
-onkeyup="searchAccount()">
+<div class="searchBox">
+    <span>🔍</span>
+    <input
+        type="text"
+        id="search"
+        placeholder="Cari UID / ID..."
+        onkeyup="render()">
+</div>
 
 <button onclick="openAccountModal()">
 + Tambah Account
