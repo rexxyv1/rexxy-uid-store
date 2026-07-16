@@ -630,26 +630,32 @@ function deleteAccount(id){
 
     const modal = document.getElementById("deleteModal");
 
+    console.log("modal:", modal);
+
     modal.style.display = "flex";
 
 }
 async function confirmDelete(){
 
+    console.log("CONFIRM HAPUS", deleteAccountID);
+
     if(!deleteAccountID) return;
 
+    try{
 
-    await accountCollection
-    .doc(deleteAccountID)
-    .delete();
+        await accountCollection.doc(deleteAccountID).delete();
 
+        console.log("BERHASIL HAPUS");
 
-    deleteAccountID = null;
+        deleteAccountID = null;
 
+        closeDeleteModal();
 
-    closeDeleteModal();
+    }catch(e){
 
+        console.log("ERROR HAPUS:", e);
 
-    alert("Akun berhasil dihapus");
+    }
 
 }
 
