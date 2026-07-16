@@ -38,6 +38,7 @@ let uidData = [];
 let accounts = [];
 let editAccountID = null;
 let deleteAccountID = null;
+let deleteUIDIndex = null;
 
 
 /* ==========================
@@ -287,24 +288,14 @@ closeAccountModal();
 DELETE UID
 ========================== */
 
-async function deleteUID(index){
+let deleteUIDIndex = null;
 
-    if(!confirm("Hapus UID ini ?")) return;
 
-    try{
+function deleteUID(index){
 
-        await db.collection("uids")
-        .doc(uidData[index].id)
-        .delete();
+    deleteUIDIndex = index;
 
-        showToast("UID berhasil dihapus");
-
-    }catch(err){
-
-        console.error(err);
-        alert(err.message);
-
-    }
+    document.getElementById("deleteModal").style.display = "flex";
 
 }
 
@@ -706,34 +697,41 @@ function closeDeleteModal(){
 
 async function confirmDelete(){
 
-    console.log("CONFIRM DIKLIK");
-    console.log("ID:", deleteAccountID);
-
-
-    if(!deleteAccountID){
-        console.log("ID KOSONG");
-        return;
-    }
-
-
     try{
 
-        await accountCollection
-        .doc(deleteAccountID)
-        .delete();
+        // hapus UID
+        if(deleteUIDIndex !== null){
 
+            await db.collection("uids")
+            .doc(uidData[deleteUIDIndex].id)
+            .delete();
 
-        console.log("BERHASIL HAPUS");
+            deleteUIDIndex = null;
 
+            showToast("UID berhasil dihapus");
 
-        deleteAccountID = null;
+        }
+
+        // hapus Account
+        else if(deleteAccountID !== null){
+
+            await accountCollection
+            .doc(deleteAccountID)
+            .delete();
+
+            deleteAccountID = null;
+
+            showToast("Akun berhasil dihapus");
+
+        }
+
 
         closeDeleteModal();
 
 
-    }catch(e){
+    }catch(err){
 
-        console.log("ERROR:", e);
+        console.error(err);
 
     }
 
