@@ -38,7 +38,6 @@ let uidData = [];
 let accounts = [];
 let editAccountID = null;
 let deleteAccountID = null;
-let deleteUIDIndex = null;
 
 
 /* ==========================
@@ -135,23 +134,28 @@ function openModal(){
 }
 
 /* ==========================
+CLOSE MODAL
+========================== */
+
+function closeModal(){
+
+    modal.style.display="none";
+
+}
+
+/* ==========================
 MANAGE ACCOUNT
 ========================== */
 
 function openAccountModal(){
 
-    editAccountID = null;
-
-    document.getElementById("accountModalTitle").innerText = "Tambah Account";
-
-    document.getElementById("accountModal").style.display = "flex";
+    accountModal.style.display = "flex";
 
 }
 
-
 function closeAccountModal(){
 
-    document.getElementById("accountModal").style.display = "none";
+    accountModal.style.display = "none";
 
 }
 
@@ -288,14 +292,24 @@ closeAccountModal();
 DELETE UID
 ========================== */
 
-let deleteUIDIndex = null;
+async function deleteUID(index){
 
+    if(!confirm("Hapus UID ini ?")) return;
 
-function deleteUID(index){
+    try{
 
-    deleteUIDIndex = index;
+        await db.collection("uids")
+        .doc(uidData[index].id)
+        .delete();
 
-    document.getElementById("deleteModal").style.display = "flex";
+        showToast("UID berhasil dihapus");
+
+    }catch(err){
+
+        console.error(err);
+        alert(err.message);
+
+    }
 
 }
 
@@ -607,73 +621,6 @@ Hapus
 
 });
 
-function searchAccount(){
-
-    let keyword = document
-    .getElementById("searchAccount")
-    .value
-    .toLowerCase();
-
-
-    let filtered = accounts.filter(acc => {
-
-        return (
-            String(acc.accountID)
-            .toLowerCase()
-            .includes(keyword)
-
-            ||
-
-            String(acc.accountUID)
-            .toLowerCase()
-            .includes(keyword)
-        );
-
-    });
-
-
-    let html="";
-
-
-    filtered.forEach((acc)=>{
-
-        html += `
-        <tr>
-
-        <td>${acc.accountID}</td>
-
-        <td>${acc.accountUID}</td>
-
-        <td>${acc.accountPassword}</td>
-
-        <td>
-        <span class="${acc.accountStatus === 'Ready' ? 'status-ready' : 'status-sold'}">
-        ${acc.accountStatus}
-        </span>
-        </td>
-
-        <td>
-
-        <button type="button" onclick="editAccount('${acc.id}')">
-        Edit
-        </button>
-
-        <button type="button" onclick="deleteAccount('${acc.id}')">
-        Hapus
-        </button>
-
-        </td>
-
-        </tr>
-        `;
-
-    });
-
-
-    document.getElementById("accountTable").innerHTML = html;
-
-}
-
 
 document.getElementById("accountTable").innerHTML = html;
 
@@ -697,41 +644,34 @@ function closeDeleteModal(){
 
 async function confirmDelete(){
 
+    console.log("CONFIRM DIKLIK");
+    console.log("ID:", deleteAccountID);
+
+
+    if(!deleteAccountID){
+        console.log("ID KOSONG");
+        return;
+    }
+
+
     try{
 
-        // hapus UID
-        if(deleteUIDIndex !== null){
+        await accountCollection
+        .doc(deleteAccountID)
+        .delete();
 
-            await db.collection("uids")
-            .doc(uidData[deleteUIDIndex].id)
-            .delete();
 
-            deleteUIDIndex = null;
+        console.log("BERHASIL HAPUS");
 
-            showToast("UID berhasil dihapus");
 
-        }
-
-        // hapus Account
-        else if(deleteAccountID !== null){
-
-            await accountCollection
-            .doc(deleteAccountID)
-            .delete();
-
-            deleteAccountID = null;
-
-            showToast("Akun berhasil dihapus");
-
-        }
-
+        deleteAccountID = null;
 
         closeDeleteModal();
 
 
-    }catch(err){
+    }catch(e){
 
-        console.error(err);
+        console.log("ERROR:", e);
 
     }
 
@@ -739,18 +679,19 @@ async function confirmDelete(){
 
 function editAccount(id){
 
-    let acc = accounts.find(a => a.id === id);
+let acc = accounts.find(a => a.id === id);
 
-    document.getElementById("accountID").value = acc.accountID;
-    document.getElementById("accountUID").value = acc.accountUID;
-    document.getElementById("accountPassword").value = acc.accountPassword;
-    document.getElementById("accountStatus").value = acc.accountStatus;
 
-    editAccountID = id;
+document.getElementById("accountID").value = acc.accountID;
+document.getElementById("accountUID").value = acc.accountUID;
+document.getElementById("accountPassword").value = acc.accountPassword;
+document.getElementById("accountStatus").value = acc.accountStatus;
 
-    document.getElementById("accountModalTitle").innerText = "Edit Account";
 
-    accountModal.style.display = "flex";
+editAccountID = id;
+
+
+openAccountModal();
 
 }
 

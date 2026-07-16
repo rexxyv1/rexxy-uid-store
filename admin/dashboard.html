@@ -170,12 +170,6 @@ Sold
 
 <h1>Data Account</h1>
 
-<input 
-type="text" 
-id="searchAccount" 
-placeholder="Cari ID FF / UID..."
-onkeyup="searchAccount()">
-
 <button onclick="openAccountModal()">
 + Tambah Account
 </button>
@@ -335,15 +329,15 @@ console.log("db =", typeof db);
         </select>
 
         <div class="modal-button">
-        
+
         <button type="button" onclick="closeEditModal()">
-        Batal
+            Batal
         </button>
         
         <button type="button" onclick="saveEdit()">
-        Simpan
+            Simpan
         </button>
-        
+
         </div>
 
     </div>
@@ -354,53 +348,89 @@ console.log("db =", typeof db);
 
 <div class="modal-content">
 
-<h2 id="accountModalTitle">Tambah Account</h2>
+<h2>Tambah Account</h2>
 
-<input id="accountID" placeholder="ID FF">
-<input id="accountUID" placeholder="UID">
-<input id="accountPassword" placeholder="Password">
+<input
+id="accountID"
+placeholder="ID FF">
+
+<input
+id="accountUID"
+placeholder="UID">
+
+<input
+id="accountPassword"
+placeholder="Password">
 
 <select id="accountStatus">
+
 <option>Ready</option>
+
 <option>Sold</option>
+
 </select>
 
 <div class="modalButton">
 
-<button type="button" onclick="closeAccountModal()">
+<button onclick="closeAccountModal()">
 Batal
 </button>
 
-<button type="button" onclick="saveAccount()">
+<button onclick="saveAccount()">
 Simpan
 </button>
 
 </div>
 
+<div class="menu">
+
+    <div onclick="openHomePage()">
+        Home
+    </div>
+
+    <div onclick="openAccountPage()">
+        Data Akun
+    </div>
+
 </div>
+
+</div> <!-- TUTUP accountModal-content -->
 
 </div> <!-- TUTUP accountModal -->
 
 
-<!-- DELETE MODAL -->
+<!-- DELETE CONFIRM MODAL -->
+
+<div id="accountModal" class="modal">
+
+    <div class="modal-content">
+
+        <h2>Tambah Account</h2>
+
+        ... input akun ...
+
+    </div>
+
+</div>
+
 
 <div id="deleteModal" class="modal">
 
-<div class="modal-content">
+    <div class="modal-content">
 
-<h2>Hapus Data?</h2>
+        <h2>Hapus Data?</h2>
 
-<p>Yakin ingin menghapus akun ini?</p>
+        <p>Yakin ingin menghapus akun ini?</p>
 
-<button type="button" onclick="closeDeleteModal()">
-Batal
-</button>
+        <button onclick="closeDeleteModal()">
+        Batal
+        </button>
 
-<button type="button" onclick="confirmDelete()">
-Hapus
-</button>
+        <button type="button" onclick="confirmDelete()">
+        Hapus
+        </button>
 
-</div>
+    </div>
 
 </div>
 
