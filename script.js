@@ -64,8 +64,12 @@ let matchFilter = false;
 switch(currentFilter){
 
     case "all":
-        matchFilter = true;
-        break;
+    matchFilter = true;
+    break;
+    
+    case "promo":
+    matchFilter = item.promo === true;
+    break;
 
     case "Ready":
     case "Sold":
