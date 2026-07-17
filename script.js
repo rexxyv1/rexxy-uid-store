@@ -43,14 +43,6 @@ switch(currentFilter){
     case "Sold":
         matchFilter = item.status === currentFilter;
         break;
-    
-    case "terbaru":
-        matchFilter = true;
-        break;
-
-    case "terlama":
-        matchFilter = true;
-        break;
 
     case "murah":
         matchFilter = Number(item.harga) < 50000;
@@ -80,22 +72,6 @@ switch(currentFilter){
         return matchSearch && matchFilter;
 
     });
-    
-    if (currentFilter === "terbaru") {
-
-    filteredData.sort((a, b) => {
-        return (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0);
-    });
-
-}
-
-if (currentFilter === "terlama") {
-
-    filteredData.sort((a, b) => {
-        return (a.createdAt?.seconds || 0) - (b.createdAt?.seconds || 0);
-    });
-
-}
 
     if(filteredData.length === 0){
 
