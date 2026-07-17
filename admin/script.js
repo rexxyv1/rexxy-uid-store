@@ -143,6 +143,16 @@ function closeModal(){
 
 }
 
+function togglePromo(){
+
+    const aktif =
+    document.getElementById("promoCheck").checked;
+
+    document.getElementById("promoArea").style.display =
+    aktif ? "block" : "none";
+
+}
+
 /* ==========================
 MANAGE ACCOUNT
 ========================== */
@@ -224,30 +234,52 @@ async function saveUID(){
 
     }
 
-    const data={
-
+        const promo = document.getElementById("promoCheck").checked;
+    
+        const data = {
+    
         uid,
         harga,
         login,
         status,
+    
         deskripsi,
         gambar,
-        createdAt:firebase.firestore.FieldValue.serverTimestamp()
+    
+        promo,
+    
+        hargaPromo: promo
+            ? Number(document.getElementById("hargaPromo").value)
+            : null,
+    
+        promoEnd: promo
+            ? firebase.firestore.Timestamp.fromDate(
+                new Date(document.getElementById("promoEnd").value)
+            )
+            : null,
+    
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    
+        };
+    
+        try{
 
-    };
+    await db.collection("uids").add(data);
 
-    try{
+    showToast("UID berhasil ditambahkan");
 
-        await db.collection("uids").add(data);
+    closeModal();
 
-        showToast("UID berhasil ditambahkan");
+    document.getElementById("uid").value="";
+    document.getElementById("harga").value="";
+    document.getElementById("deskripsi").value="";
+    document.getElementById("preview").style.display="none";
 
-        closeModal();
-
-        document.getElementById("uid").value="";
-        document.getElementById("harga").value="";
-        document.getElementById("deskripsi").value="";
-        document.getElementById("preview").style.display="none";
+    // RESET FORM PROMO
+    document.getElementById("promoCheck").checked = false;
+    document.getElementById("promoArea").style.display = "none";
+    document.getElementById("hargaPromo").value = "";
+    document.getElementById("promoEnd").value = "";
 
     }catch(err){
 
@@ -521,6 +553,8 @@ window.onclick=function(e){
     }
 
 }
+
+
 
 /* ==========================
 EDIT STOK ADMIN PANEL

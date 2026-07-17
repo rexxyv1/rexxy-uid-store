@@ -224,14 +224,33 @@ placeholder="UID">
 id="harga"
 placeholder="Harga">
 
+<label style="margin-top:15px;display:block;">
+<input
+type="checkbox"
+id="promoCheck"
+onchange="togglePromo()">
+
+ Aktifkan Promo
+</label>
+
+<div id="promoArea" style="display:none;">
+
+<input
+type="number"
+id="hargaPromo"
+placeholder="Harga Promo">
+
+<input
+type="datetime-local"
+id="promoEnd">
+
+</div>
+
 <select id="login">
 
 <option>Guest</option>
-
 <option>Google</option>
-
 <option>Facebook</option>
-
 <option>VK</option>
 
 </select>
