@@ -172,7 +172,6 @@ switch(currentFilter){
         tableBody.innerHTML += `
 <div class="uid-card">
 
-    ${isNew ? `<span class="new-badge">🆕 NEW</span>` : ""}
     ${item.promo ? `
     <div class="promo-box">
     
@@ -185,7 +184,11 @@ switch(currentFilter){
     </div>
     
     </div>
-    ` : ""}
+    ` : (isNew ? `
+    <span class="new-badge">
+    🆕 NEW
+    </span>
+    ` : "")}
 
     <div class="info">
         <span class="label">🆔 UID</span>
