@@ -107,6 +107,9 @@ switch(currentFilter){
                     ❌ Sold Out
                 </button>
               `;
+              
+        const isNew = item.createdAt &&
+        (Date.now() - item.createdAt.toDate().getTime()) < 24 * 60 * 60 * 1000;
 
         const hargaHTML = item.promo
         ? `
@@ -139,6 +142,7 @@ switch(currentFilter){
         tableBody.innerHTML += `
 <div class="uid-card">
 
+    ${isNew ? `<span class="new-badge">🆕 NEW</span>` : ""}
     ${item.promo ? `<span class="promo-badge">🔥 PROMO</span>` : ""}
 
     <div class="info">
