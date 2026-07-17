@@ -522,6 +522,7 @@ border:1px solid rgba(255,255,255,.08);
 border-radius:22px;
 
 padding:22px;
+padding-top:58px;
 
 position:relative;
 
@@ -978,6 +979,7 @@ grid-template-columns:1fr;
 .uid-card{
 
 padding:18px;
+padding-top:54px;
 
 border-radius:18px;
 
@@ -1112,28 +1114,6 @@ font-weight:600;
 /* ===========================
    PROMO SYSTEM
 =========================== */
-
-.promo-badge{
-
-position:absolute;
-
-top:15px;
-left:15px;
-
-background:#ff3b30;
-color:#fff;
-
-padding:6px 12px;
-
-border-radius:999px;
-
-font-size:12px;
-
-font-weight:bold;
-
-box-shadow:0 8px 20px rgba(255,59,48,.35);
-
-}
 
 .old-price{
 
