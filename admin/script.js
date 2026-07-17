@@ -236,33 +236,33 @@ async function saveUID(){
 
         const promo = document.getElementById("promoCheck").checked;
     
-        const data = {
-    
-        uid,
-        harga,
-        login,
-        status,
-    
-        deskripsi,
-        gambar,
-    
-        promo,
-    
-        hargaPromo: promo
-            ? Number(document.getElementById("hargaPromo").value)
-            : null,
-    
-        promoEnd: promo
-            ? firebase.firestore.Timestamp.fromDate(
-                new Date(document.getElementById("promoEnd").value)
-            )
-            : null,
-    
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    
-        };
-    
-        try{
+    const data = {
+
+    uid,
+    harga,
+    login,
+    status,
+
+    deskripsi,
+    gambar,
+
+    promo,
+
+    hargaPromo: promo
+        ? Number(document.getElementById("hargaPromo").value)
+        : null,
+
+    promoEnd: promo
+        ? firebase.firestore.Timestamp.fromDate(
+            new Date(document.getElementById("promoEnd").value)
+        )
+        : null,
+
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+
+    };
+
+    try{
 
     await db.collection("uids").add(data);
 
