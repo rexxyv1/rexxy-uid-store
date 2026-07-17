@@ -19,6 +19,34 @@ function updateCounter() {
     soldStock.textContent = sold;
 }
 
+function getCountdown(endTime){
+
+    if(!endTime) return "";
+
+    const now = new Date().getTime();
+    const end = endTime.toDate().getTime();
+
+    let diff = end - now;
+
+    if(diff <= 0){
+
+        return "Promo Berakhir";
+
+    }
+
+    const hari = Math.floor(diff / (1000*60*60*24));
+    diff %= 1000*60*60*24;
+
+    const jam = Math.floor(diff / (1000*60*60));
+
+    diff %= 1000*60*60;
+
+    const menit = Math.floor(diff / (1000*60));
+
+    return `${hari}H ${jam}J ${menit}M`;
+
+}
+
 function renderTable() {
 
     const keyword = searchInput.value.toLowerCase().trim();
@@ -111,6 +139,8 @@ switch(currentFilter){
         const isNew = item.createdAt &&
         (Date.now() - item.createdAt.toDate().getTime()) < 24 * 60 * 60 * 1000;
 
+        const countdown = getCountdown(item.promoEnd);
+        
         const hargaHTML = item.promo
         ? `
         <div class="old-price">
@@ -143,7 +173,19 @@ switch(currentFilter){
 <div class="uid-card">
 
     ${isNew ? `<span class="new-badge">🆕 NEW</span>` : ""}
-    ${item.promo ? `<span class="promo-badge">🔥 PROMO</span>` : ""}
+    ${item.promo ? `
+    <div class="promo-box">
+    
+    <div class="promo-badge">
+    🔥 PROMO
+    </div>
+    
+    <div class="promo-countdown">
+    ⏰ ${countdown}
+    </div>
+    
+    </div>
+    ` : ""}
 
     <div class="info">
         <span class="label">🆔 UID</span>
