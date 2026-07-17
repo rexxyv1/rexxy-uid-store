@@ -1433,95 +1433,80 @@ cursor:pointer;
 .new-badge{
 
 position:absolute;
+
 top:15px;
+
 left:15px;
-
-background:#00bfff;
-
-color:white;
 
 padding:6px 12px;
 
 border-radius:999px;
 
-font-size:12px;
+background:#3B82F6;
 
-font-weight:bold;
+color:white;
 
-animation:newPulse 1.5s infinite;
+font-size:11px;
 
-}
+font-weight:700;
 
-@keyframes newPulse{
+box-shadow:0 4px 12px rgba(59,130,246,.35);
 
-0%,100%{
-
-transform:scale(1);
+z-index:5;
 
 }
 
-50%{
-
-transform:scale(1.08);
-
-}
-
-}
-
-.promo-box{
+.promo-badge{
 
 position:absolute;
 
-left:15px;
 top:15px;
 
-display:flex;
-flex-direction:column;
-gap:6px;
+left:15px;
 
-z-index:10;
+padding:6px 12px;
+
+border-radius:999px;
+
+background:linear-gradient(90deg,#ff4d4d,#ff6a00);
+
+color:#fff;
+
+font-size:11px;
+
+font-weight:700;
+
+letter-spacing:.5px;
+
+box-shadow:0 4px 12px rgba(255,80,80,.4);
+
+z-index:5;
 
 }
 
 .promo-countdown{
 
-background:#111;
+margin-top:10px;
 
-color:#FFD54F;
+display:inline-flex;
 
-padding:5px 10px;
+align-items:center;
+
+gap:6px;
+
+padding:6px 10px;
 
 border-radius:8px;
 
-font-size:11px;
+background:rgba(255,170,0,.12);
 
-font-weight:bold;
+border:1px solid rgba(255,170,0,.3);
 
-border:1px solid #FFD54F;
+color:#FFD54F;
 
-animation:pulsePromo 1s infinite;
+font-size:12px;
 
-}
-
-@keyframes pulsePromo{
-
-0%{
-
-transform:scale(1);
-
-}
-
-50%{
-
-transform:scale(1.05);
-
-}
-
-100%{
-
-transform:scale(1);
-
-}
+font-weight:600;
 
 }
 

@@ -169,36 +169,35 @@ switch(currentFilter){
         </div>
         `;
 
-        tableBody.innerHTML += `
-<div class="uid-card">
+        tableBody.innerHTML += `<div class="uid-card">
 
-    ${item.promo ? `
-    <div class="promo-box">
-    
-    <div class="promo-badge">
-    🔥 PROMO
-    </div>
-    
-    <div class="promo-countdown">
-    ⏰ ${countdown}
-    </div>
-    
-    </div>
-    ` : (isNew ? `
-    <span class="new-badge">
-    🆕 NEW
-    </span>
-    ` : "")}
+        ${item.promo ? `
+        <span class="promo-badge">
+        🔥 PROMO
+        </span>
+        ` : (isNew ? `
+        <span class="new-badge">
+        🆕 NEW
+        </span>
+        ` : "")}
 
-    <div class="info">
-        <span class="label">🆔 UID</span>
-        <h3>${item.uid}</h3>
-    </div>
+        <div class="info">
+            <span class="label">🆔 UID</span>
+            <h3>${item.uid}</h3>
+        </div>
 
-    <div class="info">
-        <span class="label">💰 Harga</span>
-        ${hargaHTML}
-    </div>
+        <div class="info">
+            <span class="label">💰 Harga</span>
+        
+            ${hargaHTML}
+        
+            ${item.promo ? `
+            <div class="promo-countdown">
+                ⏰ Berakhir ${countdown}
+            </div>
+            ` : ""}
+        
+        </div>
 
     <div class="info">
         <span class="label">🔑 Login</span>
