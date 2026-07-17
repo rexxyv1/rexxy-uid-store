@@ -148,15 +148,15 @@ switch(currentFilter){
             style:"currency",
             currency:"IDR",
             minimumFractionDigits:0
-        }).format(item.hargaAsli)}
+        }).format(item.harga)}
         </div>
         
-        <div class="price">
+        <div class="price promo-price">
         ${new Intl.NumberFormat("id-ID",{
             style:"currency",
             currency:"IDR",
             minimumFractionDigits:0
-        }).format(item.harga)}
+        }).format(item.hargaPromo)}
         </div>
         `
         : `
