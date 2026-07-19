@@ -1490,4 +1490,31 @@ font-weight:600;
 
 }
 
+/* =========================
+   BANNER SLIDER
+========================= */
+
+.banner-slider{
+    width:95%;
+    margin:20px auto;
+    overflow:hidden;
+}
+
+.slider{
+    border-radius:18px;
+    overflow:hidden;
+}
+
+.slides{
+    display:flex;
+    transition:transform .5s ease;
+}
+
+.slides img{
+    width:100%;
+    flex-shrink:0;
+    display:block;
+    border-radius:18px;
+}
+
 </style>

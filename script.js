@@ -320,6 +320,35 @@ filterSelect.addEventListener("change", () => {
 
     renderTable();
     
+/* =========================
+   AUTO SLIDER
+========================= */
+
+const slides = document.querySelector(".slides");
+
+if(slides){
+
+    let index = 0;
+
+    const total = slides.children.length;
+
+    setInterval(()=>{
+
+        index++;
+
+        if(index >= total){
+
+            index = 0;
+
+        }
+
+        slides.style.transform =
+        `translateX(-${index * 100}%)`;
+
+    },4000);
+
+}
+    
 // Refresh tampilan setiap 1 menit
 setInterval(() => {
     renderTable();
