@@ -29,9 +29,7 @@ function getCountdown(endTime){
     let diff = end - now;
 
     if(diff <= 0){
-
-        return "Promo Berakhir";
-
+    return "";
     }
 
     const hari = Math.floor(diff / (1000*60*60*24));
@@ -68,7 +66,10 @@ switch(currentFilter){
     break;
     
     case "promo":
-    matchFilter = item.promo === true;
+    matchFilter =
+        item.promo &&
+        item.promoEnd &&
+        item.promoEnd.toDate().getTime() > Date.now();
     break;
 
     case "Ready":
@@ -145,7 +146,12 @@ switch(currentFilter){
 
         const countdown = getCountdown(item.promoEnd);
         
-        const hargaHTML = item.promo
+        const promoAktif =
+        item.promo &&
+        item.promoEnd &&
+        item.promoEnd.toDate().getTime() > Date.now();
+
+        const hargaHTML = promoAktif
         ? `
         <div class="old-price">
         ${new Intl.NumberFormat("id-ID",{
@@ -175,7 +181,7 @@ switch(currentFilter){
 
         tableBody.innerHTML += `<div class="uid-card">
 
-        ${item.promo ? `
+        ${promoAktif ? `
         <span class="promo-badge">
         🔥 PROMO
         </span>
@@ -195,7 +201,7 @@ switch(currentFilter){
         
             ${hargaHTML}
         
-            ${item.promo ? `
+            ${promoAktif ? `
             <div class="promo-countdown">
                 ⏰ Berakhir ${countdown}
             </div>
@@ -313,5 +319,10 @@ filterSelect.addEventListener("change", () => {
     currentFilter = filterSelect.value;
 
     renderTable();
+    
+// Refresh tampilan setiap 1 menit
+setInterval(() => {
+    renderTable();
+}, 60000);
 
 });
