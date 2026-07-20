@@ -16,7 +16,8 @@ let currentFilter = "all";
 
 function updateCounter() {
 
-    totalStock.textContent = uidData.length;
+    if(totalStock)
+totalStock.textContent = uidData.length;
 
     const ready = uidData.filter(item => item.status === "Ready").length;
     const sold = uidData.filter(item => item.status === "Sold").length;
@@ -33,17 +34,17 @@ function updateCounter() {
 
     }).length;
 
-    readyStock.textContent = ready;
-    soldStock.textContent = sold;
-
-    // LIVE STORE STATUS
-    liveReady.textContent = ready;
-    livePromo.textContent = promo;
-    liveNew.textContent = baru;
-
-    liveUpdate.textContent = new Date().toLocaleTimeString("id-ID", {
-        hour: "2-digit",
-        minute: "2-digit"
+    if(readyStock) readyStock.textContent = ready;
+    if(soldStock) soldStock.textContent = sold;
+    
+    if(liveReady) liveReady.textContent = ready;
+    if(livePromo) livePromo.textContent = promo;
+    if(liveNew) liveNew.textContent = baru;
+    
+    if(liveUpdate)
+    liveUpdate.textContent = new Date().toLocaleTimeString("id-ID",{
+        hour:"2-digit",
+        minute:"2-digit"
     });
 
 }
