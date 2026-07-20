@@ -1737,15 +1737,6 @@ grid-template-columns:repeat(2,1fr);
 
 }
 
-.live-rating{
-    width:min(1150px,92%);
-    margin:0 auto 35px;
-    padding:22px;
-    background:linear-gradient(180deg,#171327,#1d1833);
-    border-radius:20px;
-    border:1px solid rgba(139,92,246,.25);
-}
-
 }
 
 </style>
