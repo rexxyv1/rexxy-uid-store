@@ -436,46 +436,131 @@ box-shadow:
 .benefit{
 
 width:min(1150px,92%);
+margin:35px auto;
 
-margin:auto;
+padding:25px;
 
-background:linear-gradient(
-180deg,
-var(--card),
-var(--card2)
-);
+background:linear-gradient(180deg,#171327,#1d1833);
 
-border:1px solid var(--border);
+border-radius:22px;
 
-border-radius:20px;
+border:1px solid rgba(139,92,246,.25);
 
-padding:22px;
-
-margin-bottom:28px;
+box-shadow:0 15px 35px rgba(0,0,0,.25);
 
 }
 
 .benefit h3{
 
-font-size:18px;
+color:#fff;
 
-margin-bottom:15px;
+font-size:20px;
+
+margin-bottom:20px;
+
+text-align:center;
 
 }
 
-.benefit ul{
-
-list-style:none;
+.benefit-grid{
 
 display:grid;
 
-gap:10px;
+grid-template-columns:repeat(3,1fr);
+
+gap:18px;
 
 }
 
-.benefit li{
+.benefit-card{
 
-color:var(--text);
+background:#241d3d;
+
+padding:22px;
+
+border-radius:18px;
+
+text-align:center;
+
+border:1px solid rgba(255,255,255,.08);
+
+transition:.35s;
+
+cursor:pointer;
+
+}
+
+.benefit-card:hover{
+
+transform:translateY(-6px);
+
+border-color:#8B5CF6;
+
+box-shadow:0 10px 25px rgba(139,92,246,.25);
+
+}
+
+.benefit-card .icon{
+
+font-size:36px;
+
+margin-bottom:12px;
+
+}
+
+.benefit-card h4{
+
+color:#fff;
+
+margin-bottom:8px;
+
+font-size:16px;
+
+}
+
+.benefit-card p{
+
+color:#bdbdbd;
+
+font-size:13px;
+
+line-height:1.6;
+
+}
+
+@media(max-width:768px){
+
+.benefit-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+gap:12px;
+
+}
+
+.benefit-card{
+
+padding:18px;
+
+}
+
+.benefit-card .icon{
+
+font-size:30px;
+
+}
+
+.benefit-card h4{
+
+font-size:15px;
+
+}
+
+.benefit-card p{
+
+font-size:12px;
+
+}
 
 }
 
@@ -1612,6 +1697,76 @@ transform:scale(1.3);
 .next{
 
 display:none;
+
+}
+
+}
+
+/*==========================
+TRUST BAR
+==========================*/
+
+.trust-bar{
+
+width:min(1150px,92%);
+
+margin:25px auto;
+
+display:grid;
+
+grid-template-columns:repeat(4,1fr);
+
+gap:15px;
+
+}
+
+.trust-item{
+
+background:linear-gradient(180deg,#20193b,#171327);
+
+padding:18px;
+
+border-radius:16px;
+
+text-align:center;
+
+border:1px solid rgba(139,92,246,.2);
+
+transition:.3s;
+
+font-weight:600;
+
+color:#fff;
+
+}
+
+.trust-item span{
+
+display:block;
+
+margin-top:8px;
+
+font-size:13px;
+
+color:#bfbfbf;
+
+}
+
+.trust-item:hover{
+
+transform:translateY(-5px);
+
+border-color:#8B5CF6;
+
+box-shadow:0 10px 25px rgba(139,92,246,.2);
+
+}
+
+@media(max-width:768px){
+
+.trust-bar{
+
+grid-template-columns:repeat(2,1fr);
 
 }
 
