@@ -320,32 +320,105 @@ filterSelect.addEventListener("change", () => {
 
     renderTable();
     
-/* =========================
-   AUTO SLIDER
-========================= */
+/* ===========================
+   HERO SLIDER
+=========================== */
 
-const slides = document.querySelector(".slides");
+const track = document.querySelector(".slider-track");
+const slides = document.querySelectorAll(".slider-track img");
+const dots = document.querySelectorAll(".dot");
+const next = document.querySelector(".next");
+const prev = document.querySelector(".prev");
 
-if(slides){
+if(track){
 
-    let index = 0;
+let index = 0;
 
-    const total = slides.children.length;
+function updateSlider(){
 
-    setInterval(()=>{
+track.style.transform = `translateX(-${index*100}%)`;
 
-        index++;
+dots.forEach((dot,i)=>{
 
-        if(index >= total){
+dot.classList.toggle("active",i===index);
 
-            index = 0;
+});
 
-        }
+}
 
-        slides.style.transform =
-        `translateX(-${index * 100}%)`;
+function nextSlide(){
 
-    },4000);
+index++;
+
+if(index>=slides.length){
+
+index=0;
+
+}
+
+updateSlider();
+
+}
+
+function prevSlide(){
+
+index--;
+
+if(index<0){
+
+index=slides.length-1;
+
+}
+
+updateSlider();
+
+}
+
+next.onclick = nextSlide;
+
+prev.onclick = prevSlide;
+
+dots.forEach((dot,i)=>{
+
+dot.onclick=()=>{
+
+index=i;
+
+updateSlider();
+
+};
+
+});
+
+setInterval(nextSlide,4000);
+
+/* Swipe HP */
+
+let startX=0;
+
+track.addEventListener("touchstart",(e)=>{
+
+startX=e.touches[0].clientX;
+
+});
+
+track.addEventListener("touchend",(e)=>{
+
+let endX=e.changedTouches[0].clientX;
+
+if(startX-endX>50){
+
+nextSlide();
+
+}
+
+if(endX-startX>50){
+
+prevSlide();
+
+}
+
+});
 
 }
     
