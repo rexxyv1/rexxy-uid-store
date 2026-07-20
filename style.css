@@ -1617,4 +1617,130 @@ display:none;
 
 }
 
+/* ===========================
+   LIVE STORE STATUS
+=========================== */
+
+.live-status{
+
+    width:min(1150px,92%);
+    margin:auto;
+    margin-bottom:25px;
+
+    padding:22px;
+
+    background:linear-gradient(180deg,#171327,#1d1833);
+
+    border:1px solid rgba(139,92,246,.25);
+
+    border-radius:20px;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.25);
+
+}
+
+.live-header{
+
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    margin-bottom:18px;
+
+}
+
+.live-header h3{
+
+    font-size:18px;
+    color:#fff;
+
+}
+
+.live-dot{
+
+    width:12px;
+    height:12px;
+
+    border-radius:50%;
+
+    background:#22c55e;
+
+    animation:livePulse 1.3s infinite;
+
+}
+
+@keyframes livePulse{
+
+0%,100%{
+
+transform:scale(1);
+opacity:1;
+
+}
+
+50%{
+
+transform:scale(1.4);
+opacity:.45;
+
+}
+
+}
+
+.live-grid{
+
+display:grid;
+
+grid-template-columns:repeat(4,1fr);
+
+gap:15px;
+
+}
+
+.live-item{
+
+padding:18px;
+
+background:#241d3d;
+
+border-radius:16px;
+
+text-align:center;
+
+border:1px solid rgba(255,255,255,.06);
+
+transition:.3s;
+
+}
+
+.live-item:hover{
+
+transform:translateY(-4px);
+
+border-color:#8B5CF6;
+
+}
+
+.live-item strong{
+
+display:block;
+
+margin-top:8px;
+
+font-size:24px;
+
+color:#8B5CF6;
+
+}
+
+@media(max-width:768px){
+
+.live-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+}
+
 </style>

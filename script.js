@@ -5,18 +5,47 @@ const totalStock = document.getElementById("totalStock");
 const readyStock = document.getElementById("readyStock");
 const soldStock = document.getElementById("soldStock");
 
+const liveReady = document.getElementById("liveReady");
+const livePromo = document.getElementById("livePromo");
+const liveNew = document.getElementById("liveNew");
+const liveUpdate = document.getElementById("liveUpdate");
+
 const filterSelect = document.getElementById("filterSelect");
 
 let currentFilter = "all";
 
 function updateCounter() {
+
     totalStock.textContent = uidData.length;
 
     const ready = uidData.filter(item => item.status === "Ready").length;
     const sold = uidData.filter(item => item.status === "Sold").length;
 
+    const promo = uidData.filter(item => item.promo === true).length;
+
+    const now = Date.now();
+
+    const baru = uidData.filter(item => {
+
+        if (!item.createdAt) return false;
+
+        return (now - item.createdAt.toDate().getTime()) < 24 * 60 * 60 * 1000;
+
+    }).length;
+
     readyStock.textContent = ready;
     soldStock.textContent = sold;
+
+    // LIVE STORE STATUS
+    liveReady.textContent = ready;
+    livePromo.textContent = promo;
+    liveNew.textContent = baru;
+
+    liveUpdate.textContent = new Date().toLocaleTimeString("id-ID", {
+        hour: "2-digit",
+        minute: "2-digit"
+    });
+
 }
 
 function getCountdown(endTime){
