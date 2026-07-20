@@ -330,93 +330,86 @@ const dots = document.querySelectorAll(".dot");
 const next = document.querySelector(".next");
 const prev = document.querySelector(".prev");
 
-if(track){
+if(track && slides.length){
 
 let index = 0;
 
 function updateSlider(){
 
-track.style.transform = `translateX(-${index*100}%)`;
+    track.style.transform = `translateX(-${index*100}%)`;
 
-dots.forEach((dot,i)=>{
-
-dot.classList.toggle("active",i===index);
-
-});
+    dots.forEach((dot,i)=>{
+        dot.classList.toggle("active", i===index);
+    });
 
 }
 
 function nextSlide(){
 
-index++;
+    index++;
 
-if(index>=slides.length){
+    if(index >= slides.length){
+        index = 0;
+    }
 
-index=0;
-
-}
-
-updateSlider();
+    updateSlider();
 
 }
 
 function prevSlide(){
 
-index--;
+    index--;
 
-if(index<0){
+    if(index < 0){
+        index = slides.length - 1;
+    }
 
-index=slides.length-1;
-
-}
-
-updateSlider();
+    updateSlider();
 
 }
 
-next.onclick = nextSlide;
-
-prev.onclick = prevSlide;
+if(next) next.addEventListener("click", nextSlide);
+if(prev) prev.addEventListener("click", prevSlide);
 
 dots.forEach((dot,i)=>{
 
-dot.onclick=()=>{
+    dot.addEventListener("click",()=>{
 
-index=i;
+        index=i;
 
-updateSlider();
+        updateSlider();
 
-};
+    });
 
 });
+
+updateSlider();
 
 setInterval(nextSlide,4000);
 
 /* Swipe HP */
 
-let startX=0;
+let startX = 0;
 
 track.addEventListener("touchstart",(e)=>{
 
-startX=e.touches[0].clientX;
+    startX = e.touches[0].clientX;
 
 });
 
 track.addEventListener("touchend",(e)=>{
 
-let endX=e.changedTouches[0].clientX;
+    const endX = e.changedTouches[0].clientX;
 
-if(startX-endX>50){
+    if(startX-endX>50){
 
-nextSlide();
+        nextSlide();
 
-}
+    }else if(endX-startX>50){
 
-if(endX-startX>50){
+        prevSlide();
 
-prevSlide();
-
-}
+    }
 
 });
 

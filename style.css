@@ -1530,6 +1530,8 @@ display:block;
 
 border-radius:18px;
 
+pointer-events:none;
+
 }
 
 .prev,
@@ -1558,6 +1560,10 @@ cursor:pointer;
 font-size:22px;
 
 backdrop-filter:blur(8px);
+
+z-index:100;
+
+pointer-events:auto;
 
 }
 
@@ -1619,5 +1625,3 @@ display:none;
 }
 
 }
-
-</style>
