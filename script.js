@@ -382,7 +382,7 @@ dots.forEach((dot,i)=>{
 
 });
 
-setInterval(nextSlide,4000);
+setInterval(nextSlide,10000);
 
 updateSlider();
 
