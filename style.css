@@ -1516,7 +1516,6 @@ box-shadow:0 0 20px rgba(0,255,255,.15);
 
 .slider-track{
 display:flex;
-width:600%;
 transition:transform .5s ease;
 }
 
