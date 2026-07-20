@@ -319,10 +319,71 @@ filterSelect.addEventListener("change", () => {
     currentFilter = filterSelect.value;
 
     renderTable();
-    
+
+});
+
 // Refresh tampilan setiap 1 menit
 setInterval(() => {
     renderTable();
 }, 60000);
+
+/* ===========================
+   HERO SLIDER
+=========================== */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+const track = document.querySelector(".slider-track");
+const slides = document.querySelectorAll(".slider-track img");
+const dots = document.querySelectorAll(".dot");
+const next = document.querySelector(".next");
+const prev = document.querySelector(".prev");
+
+if(!track || slides.length === 0) return;
+
+let index = 0;
+
+function updateSlider(){
+
+    track.style.transform = `translateX(-${index * 100}%)`;
+
+    dots.forEach((dot,i)=>{
+        dot.classList.toggle("active", i === index);
+    });
+
+}
+
+function nextSlide(){
+
+    index = (index + 1) % slides.length;
+    updateSlider();
+
+}
+
+function prevSlide(){
+
+    index = (index - 1 + slides.length) % slides.length;
+    updateSlider();
+
+}
+
+next.addEventListener("click", nextSlide);
+prev.addEventListener("click", prevSlide);
+
+dots.forEach((dot,i)=>{
+
+    dot.addEventListener("click",()=>{
+
+        index=i;
+
+        updateSlider();
+
+    });
+
+});
+
+setInterval(nextSlide,4000);
+
+updateSlider();
 
 });
